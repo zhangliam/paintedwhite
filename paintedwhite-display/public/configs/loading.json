@@ -1,0 +1,124 @@
+{
+  "name": "Loading",
+  "style": {
+    "width": "750px",
+    "height": "100%",
+    "background-color": "#CCC"
+  },
+  "status": ["normal"],
+  "components": [{
+    "style": {
+      "width": "100%",
+      "height": "100%",
+      "display": "flex",
+      "justify-content": "center",
+      "align-items": "center",
+      "flex-direction": "column"
+    },
+    "name": "loading",
+    "include": ["normal"],
+    "config": {},
+    "value": "Layer",
+    "components": [{
+      "components": [{
+        "components": [{
+          "components": [],
+          "style": {},
+          "status": ["normal"],
+          "include": ["normal"],
+          "config": {},
+          "events": [],
+          "animations": [],
+          "type": "basic-container-div"
+        }],
+        "style": {},
+        "status": ["normal"],
+        "include": ["normal"],
+        "config": {},
+        "events": [],
+        "animations": [],
+        "type": "basic-container-div"
+      }, {
+        "components": [{
+          "components": [],
+          "style": {},
+          "status": ["normal"],
+          "include": ["normal"],
+          "config": {},
+          "events": [],
+          "animations": [],
+          "type": "basic-container-div"
+        }],
+        "style": {},
+        "status": ["normal"],
+        "include": ["normal"],
+        "config": {},
+        "events": [],
+        "animations": [],
+        "type": "basic-container-div"
+      }, {
+        "components": [{
+          "components": [],
+          "style": {},
+          "status": ["normal"],
+          "include": ["normal"],
+          "config": {},
+          "events": [],
+          "animations": [],
+          "type": "basic-container-div"
+        }],
+        "style": {},
+        "status": ["normal"],
+        "include": ["normal"],
+        "config": {},
+        "events": [],
+        "animations": [],
+        "type": "basic-container-div"
+      }, {
+        "components": [{
+          "components": [],
+          "style": {},
+          "status": ["normal"],
+          "include": ["normal"],
+          "config": {},
+          "events": [],
+          "animations": [],
+          "type": "basic-container-div"
+        }],
+        "style": {},
+        "status": ["normal"],
+        "include": ["normal"],
+        "config": {},
+        "events": [],
+        "animations": [],
+        "type": "basic-container-div"
+      }],
+      "style": {},
+      "status": ["normal"],
+      "include": ["normal"],
+      "config": {},
+      "events": [],
+      "animations": [],
+      "type": "basic-container-div",
+      "class": "loadEffect"
+    }, {
+      "style": {
+        "padding-top": "20px",
+        "color": "#fff"
+      },
+      "include": ["normal"],
+      "config": {},
+      "value": "Loading",
+      "components": [],
+      "type": "basic-layer-text",
+      "__id": "mVjimwdt4KMciTEmfbQwyn"
+    }],
+    "type": "basic-container-div",
+    "status": ["normal"],
+    "__id": "8fMCPEnjz42pePhyWkgocs"
+  }],
+  "actions": [],
+  "animations": [],
+  "path": "",
+  "__id": "5DX4sxVh8oaqCVLuxVJ3KC"
+}

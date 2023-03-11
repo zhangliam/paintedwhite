@@ -1,0 +1,16 @@
+{
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "ArtBoard",
+      "identifier": "ergate.exportArtBoardForWX",
+      "script": "./exportArtBoardForWX.js"
+    }
+  ],
+  "menu": {
+    "title": "export",
+    "items": [
+      "ergate.exportArtBoardForWX"
+    ]
+  }
+}

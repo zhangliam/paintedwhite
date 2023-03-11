@@ -1,0 +1,61 @@
+{
+  "name": "paintedwhite-edit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "doc-ready": "^1.0.4",
+    "element-plus": "^1.2.0-beta.5",
+    "js-beautify": "^1.14.0",
+    "less-loader": "^11.1.0",
+    "lowdb": "^1.0.0",
+    "mitt": "^3.0.0",
+    "shortid": "^2.2.16",
+    "three": "^0.134.0",
+    "vant": "^3.3.5",
+    "vite-plugin-commonjs-externals": "^0.1.1",
+    "vue": "^3.2.13",
+    "vue-draggable-next": "^2.1.1",
+    "vue-router": "^4.0.12",
+    "vue3-draggable": "^2.0.9",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "less": "^4.1.3"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true,
+      "vue/setup-compiler-macros": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {
+      "vue/multi-word-component-names": "off",
+      "no-unused-vars": "off"
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

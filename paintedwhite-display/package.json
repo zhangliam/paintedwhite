@@ -1,0 +1,38 @@
+{
+  "name": "ergate-simple-vue",
+  "version": "0.1.0",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build && node ./jsmin.js",
+    "lint": "vue-cli-service lint",
+    "report": "vue-cli-service build --report",
+    "styleguide": "clear && vue-cli-service styleguidist",
+    "styleguide:build": "vue-cli-service styleguidist:build"
+  },
+  "dependencies": {
+    "animejs": "^3.2.1",
+    "axios": "^0.21.1",
+    "page-lifecycle": "^0.1.2",
+    "swiper": "^6.4.9",
+    "uuid": "^8.3.2",
+    "v-localize": "^1.2.2",
+    "vue": "^2.6.11",
+    "vue-awesome-swiper": "^4.1.1",
+    "vue-cookies": "^1.7.4",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.5.0",
+    "@vue/cli-plugin-eslint": "^4.5.0",
+    "@vue/cli-service": "^4.5.0",
+    "babel-eslint": "^10.1.0",
+    "compression-webpack-plugin": "^5.0.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "jsmin": "^1.0.1",
+    "mockjs": "^1.1.0",
+    "vue-cli-plugin-styleguidist": "^4.34.2",
+    "vue-template-compiler": "^2.6.11"
+  }
+}

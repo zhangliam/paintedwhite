@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0,viewport-fit=cover">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link href="<%= BASE_URL %>css/index.css" media="screen" rel="stylesheet" type="text/css" />
+    <title>Loading</title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <script src="<%= BASE_URL %>localizations/en-US.js"></script>
+    <script src="<%= BASE_URL %>localizations/zh-CN.js"></script>
+    <script src="<%= BASE_URL %>localizations/index.js"></script>
+    <!-- built by lego start -->
+    <script src="<%= BASE_URL %>js/page/loading.js"></script>
+    <script src="<%= BASE_URL %>js/page/form.js"></script>
+    <script src="<%= BASE_URL %>js/page/home.js"></script>
+    <!-- page.js -->
+    <!-- built by lego end -->
+    <script src="<%= BASE_URL %>js/config.js"></script>
+    <script>
+      // 防DNS劫持
+      var whites = ['googleanalytic', 'wechat', 'vconsole']; // 白名单
+      if (parent != window) {
+        new Image().src = './DNS_IFRAME.gif';
+      }
+      window.document.write = () => {
+        console.log('__DNS_WRITE__');
+        new Image().src = './DNS_WRITE.gif';
+        return '__UNWRITE__';
+      }
+      window.document.body.createChild = window.document.body.appendChild;
+      window.document.body.appendChild = function (el) {
+        if (Object.keys(el).indexOf('__vue__') != -1 ||
+            whites.indexOf(el.id) != -1) {
+          this.createChild(el);
+        } else {
+          console.log('__BODY_APPEND__');
+          new Image().src = './DNS_BODY_APPEND.gif';
+          return '__UNAPPENDCHILD__';
+        }
+      }
+      // 防DNS劫持
+    </script>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

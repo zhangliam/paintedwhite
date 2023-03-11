@@ -1,0 +1,59 @@
+<template>
+  <div class="options-item">
+    <div class="options-property-header">
+      <div class="options-property-header-title">{{title}}
+        <img v-if="Object.keys(computedStyle).length" @click="doCopy" class="options-icon"
+          src="@/assets/images/copy.svg" />
+        <img v-if="clipStyle" @click="doPaste" class="options-icon"
+          src="@/assets/images/paste.svg" />
+      </div>
+      <img v-if="target.__id" @click="showCreate" class="options-icon"
+        src="@/assets/images/plus.svg" />
+    </div>
+    <div class="options-property-content">
+      <div class="options-property-item" v-for="(value, key) in computedStyle"         
+        :key="key">
+        <div class="options-property-title">{{key}}:</div>
+        <div class="options-property-input"><input type="text" :value="value" 
+          @input="doUpdateProp($event.target.value, target, `style.${key}`)" /></div>
+        <img @click="doRemoveProp(target, `style.${key}`)" class="options-icon"
+          src="@/assets/images/remove.svg" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { computed, inject } from "@vue/runtime-core"
+import { doCreateProp, doUpdateProp, doRemoveProp } from '@/utils/crud'
+// import prompt from '../../prompt'
+
+const props = defineProps({
+  title: String,
+  target: Object
+})
+
+const computedStyle = computed(() => props.target.style || {})
+
+const clipStyle = inject('clip_style')
+
+const doCopy = (style) => { clipStyle.value = style }
+const doPaste = () => {
+  doUpdateProp(clipStyle.value, props.target, 'style')
+}
+const showCreate = () => {
+  // prompt({
+  //   title: '添加样式',
+  //   label: '样式名称:',
+  //   value: 'color',
+  //   inputAttrs: {
+  //     type: 'text'
+  //   },
+  //   type: 'input'
+  // }).then(input => {
+  //   if (!(input in props.target.style)) {
+  //     doCreateProp('', props.target, `style.${input}`)
+  //   }
+  // }).catch(console.error)
+}
+</script>
