@@ -51,6 +51,7 @@ export default {
     },
     options: {
       handler () {
+        debugger
         this.optionsUpdated()
       },
       deep: true
