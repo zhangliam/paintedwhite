@@ -9,15 +9,19 @@
       </div>
       <div class="box-controller">
         <img v-if="isContainer && clipLayer" @click="doPaste" class="options-icon" src="@/assets/images/paste.svg" />
-        <img @click.stop="doCopy" class="options-icon" src="@/assets/images/copy.svg" />
+        <!-- <img @click.stop="doCopy" class="options-icon" src="@/assets/images/copy.svg" /> -->
         <img v-if="!item.invisible" @click.stop="triggerVisible" class="options-icon" src="@/assets/images/visible.svg" />
         <img v-else @click.stop="triggerVisible" class="options-icon" src="@/assets/images/invisible.svg" />
-        <img @click.stop="doPullProp(item, parent, 'components')" class="options-icon" src="@/assets/images/remove.svg" />
+        <!-- <img @click.stop="doPullProp(item, parent, 'components')" class="options-icon" src="@/assets/images/remove.svg" /> -->
       </div>
     </div>
+
+
     <draggable tag="ul" class="box-children" v-if="isContainer && isExpend" :list="layers">
       <BoxLayer v-for="(child, index) in layers" :parent="item" :key="child.__id" :item="child" :red="red" :green="green + index * 10"></BoxLayer>
     </draggable>
+
+
   </li>
 </template>
 
@@ -28,6 +32,7 @@ import { inject, watch } from '@vue/runtime-core'
 import { checkContainer } from '../../../../constant/components'
 import { doPullProp, doPushProp } from '@/utils/crud'
 import { generate } from 'shortid'
+import mitt from '@/utils/mitt'
 
 export default {
   name: 'BoxLayer',
@@ -67,9 +72,10 @@ export default {
 
     const triggerVisible = () => {
       props.item.invisible = !props.item.invisible
+      mitt.emit('update_visible', JSON.stringify({ layer: props.item.__id, invisible: !props.item.invisible }))
     }
 
-    const isExpend = ref(false)
+    const isExpend = ref(true)
     const triggerExpand = () => {
       isExpend.value = !isExpend.value
     }

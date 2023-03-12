@@ -2,13 +2,13 @@
   <div class="options-item">
     <div class="options-property-header">
       <div class="options-property-header-title">{{title}}
-        <img v-if="Object.keys(computedStyle).length" @click="doCopy" class="options-icon"
+        <!-- <img v-if="Object.keys(computedStyle).length" @click="doCopy" class="options-icon"
           src="@/assets/images/copy.svg" />
         <img v-if="clipStyle" @click="doPaste" class="options-icon"
-          src="@/assets/images/paste.svg" />
+          src="@/assets/images/paste.svg" /> -->
       </div>
-      <img v-if="target.__id" @click="showCreate" class="options-icon"
-        src="@/assets/images/plus.svg" />
+      <!-- <img v-if="target.__id" @click="showCreate" class="options-icon"
+        src="@/assets/images/plus.svg" /> -->
     </div>
     <div class="options-property-content">
       <div class="options-property-item" v-for="(value, key) in computedStyle"         

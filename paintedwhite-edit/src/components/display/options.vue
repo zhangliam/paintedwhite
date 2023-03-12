@@ -3,14 +3,17 @@
     <div class="options-title">设置</div>
     <OptionPage v-if="!target.type" :target="target"></OptionPage>
     <OptionLayer :target="target"></OptionLayer>
-    <OptionAction :target="target"></OptionAction>
-    <OptionMock :target="target"></OptionMock>
+   <!--  <OptionAction :target="target"></OptionAction>
+    <OptionMock :target="target"></OptionMock> -->
   </div>
 </template>
 
 <script setup>
+  
 import OptionPage from './options/page.vue'
 import OptionLayer from './options/layer.vue'
+
+
 import OptionMock from './options/mock.vue'
 import OptionAction from './options/action.vue'
 import { computed, inject } from '@vue/runtime-core'

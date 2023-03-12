@@ -9,11 +9,13 @@
     <div class="preview-mock" ref="preview" @click="doClick">
       <Mock></Mock>
     </div>
-    <Affix></Affix>
+    
+    <!-- <Affix></Affix>
     <div class="preview-visible">
       <img v-if="visible" @click.stop="triggerVisible" class="options-icon" src="@/assets/images/visible.svg" />
       <img v-else @click.stop="triggerVisible" class="options-icon" src="@/assets/images/invisible.svg" />
-    </div>
+    </div> -->
+
   </div>
 </template>
 

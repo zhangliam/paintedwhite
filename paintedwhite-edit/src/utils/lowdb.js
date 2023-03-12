@@ -10,3 +10,5 @@ export const insertOrUpdateById = (field, id, data) => {
     window.db.get(field).push({id, data}).write()
   }
 }
+
+

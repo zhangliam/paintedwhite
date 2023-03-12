@@ -47,11 +47,13 @@ const compareLayer = (lyr) => {
 
 const layer = inject('layer')
 const layerID = inject('layerID')
+
 watch(layerID, () => {
   layers.value.forEach(lyr => {
     compareLayer(lyr)
   })
 })
+
 </script>
 
 <style lang="less">

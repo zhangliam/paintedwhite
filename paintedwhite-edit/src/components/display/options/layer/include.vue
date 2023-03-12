@@ -2,23 +2,23 @@
   <div class="options-item">
     <div class="options-property-header">
       <div class="options-property-header-title">所属状态
-        <img v-if="includes.length" @click="doCopyList" class="options-icon"
+       <!--  <img v-if="includes.length" @click="doCopyList" class="options-icon"
           src="@/assets/images/copy.svg" />
         <img v-if="clipInclude" @click="doPaste" class="options-icon"
-          src="@/assets/images/paste.svg" />
+          src="@/assets/images/paste.svg" /> -->
       </div>
-      <img @click="showCreate" class="options-icon"
-        src="@/assets/images/plus.svg" />
+      <!-- <img @click="showCreate" class="options-icon"
+        src="@/assets/images/plus.svg" /> -->
     </div>
     <div class="options-property-content">
       <div class="status-input-active" v-for="(value, key) in includes" :key="key">
         {{value}}
-        <div class="options-property-controller">
+        <!-- <div class="options-property-controller">
           <img @click.stop="doCopy(value)" class="options-icon"
             src="@/assets/images/copy.svg" />
           <img @click.stop="doPullProp(value, target, 'include')" class="options-icon"
             src="@/assets/images/close.svg" />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

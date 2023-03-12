@@ -2,23 +2,23 @@
   <div class="options-item">
     <div class="options-property-header">
       <div class="options-property-header-title">状态
-        <img v-if="computedStatus.length" @click="doCopyList" class="options-icon"
+       <!--  <img v-if="computedStatus.length" @click="doCopyList" class="options-icon"
           src="@/assets/images/copy.svg" />
         <img v-if="clipStatus || clipStatusList" @click="doPaste" class="options-icon"
-          src="@/assets/images/paste.svg" />
+          src="@/assets/images/paste.svg" /> -->
       </div>
-      <img v-if="target.__id" @click="showCreate" class="options-icon"
-        src="@/assets/images/plus.svg" />
+      <!-- <img v-if="target.__id" @click="showCreate" class="options-icon"
+        src="@/assets/images/plus.svg" /> -->
     </div>
     <div class="options-property-content">
       <div :class="value == current ? ['status-input-active'] : ['status-input']" v-for="(value, key) in computedStatus" :key="key" @click="doSelect(value)">
-        {{value}}
-        <div class="options-property-controller">
+        {{ value }}
+        <!-- <div class="options-property-controller">
           <img @click.stop="doCopy(value)" class="options-icon"
             src="@/assets/images/copy.svg" />
           <img @click.stop="doPullProp(value, target, 'status')" class="options-icon"
             src="@/assets/images/close.svg" />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

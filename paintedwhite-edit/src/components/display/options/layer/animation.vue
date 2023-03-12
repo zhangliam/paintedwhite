@@ -1,10 +1,10 @@
 <template>
-  <div class="options-item">
+  <!-- <div class="options-item">
     <div class="options-property-header">
       <div class="options-property-header-title">动画
         <img v-if="clipAnimation" @click="doPaste" class="options-icon" src="@/assets/images/paste.svg" />
       </div>
-      <img v-if="target.__id" @click="showCreate" class="options-icon" src="@/assets/images/plus.svg" />
+      <img v-if="target.__id" @click="showCreateProp" class="options-icon" src="@/assets/images/plus.svg" />
     </div>
     <div class="options-property-content">
       <div class="animation-item" v-for="(group, index) in computedAnimations" :key="index">
@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup>
@@ -53,7 +53,7 @@ const clipAnimation = inject('clip_animation')
 const clipAnimationProp = inject('clip_animation_prop')
 const doCopy = (animation) => {clipAnimation.value = animation}
 const doPaste = () => {}
-const showCreate = () => {
+const showCreateProp = () => {
   // prompt({
   //   title: '添加动画',
   //   label: '动画名称:',
@@ -66,7 +66,7 @@ const showCreate = () => {
 }
 const doRemove = () => {}
 const doPasteProp = () => {}
-const showCreateProp = () => {}
+const showCreatePropProp = () => {}
 </script>
 
 <style>

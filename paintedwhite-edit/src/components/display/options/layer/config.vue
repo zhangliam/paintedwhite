@@ -2,10 +2,10 @@
   <div class="options-item">
     <div class="options-property-header">
       <div class="options-property-header-title">组件属性 
-        <img @click="doCopy" class="options-icon" src="@/assets/images/copy.svg" />
-        <img v-if="clipConfig" @click="doPaste" class="options-icon" src="@/assets/images/paste.svg" />
+        <!-- <img @click="doCopy" class="options-icon" src="@/assets/images/copy.svg" />
+        <img v-if="clipConfig" @click="doPaste" class="options-icon" src="@/assets/images/paste.svg" /> -->
       </div>
-      <img @click="showCreate" class="options-icon" src="@/assets/images/plus.svg" />
+      <!-- <img @click="showCreate" class="options-icon" src="@/assets/images/plus.svg" /> -->
     </div>
     <div class="options-property-content">
       <div class="options-property-item">

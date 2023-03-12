@@ -3,12 +3,12 @@
     :style="'background-color: rgba(' + red + ',' + green + ', 213, 0.2)'">
     <div class="box-item">
       <div v-if="!editName" ref="title" class="box-title" @dblclick="onDBClick">{{item.name}}</div>
-      <input v-if="editName" ref="titleInput" type="text" class="box-title" :value="item.name" @blur="onBlur"/>
-      <div class="box-controller">
+      <!-- <input v-if="editName" ref="titleInput" type="text" class="box-title" :value="item.name" @blur="onBlur"/> -->
+      <!-- <div class="box-controller">
         <img v-if="editable" @click.stop="doSave" class="options-icon" src="@/assets/images/save.svg" />
-        <!-- <img @click.stop="doCopy" class="options-icon" src="@/assets/images/copy.svg" />
-        <img @click.stop="doRemove" class="options-icon" src="@/assets/images/remove.svg" /> -->
-      </div>
+        <img @click.stop="doCopy" class="options-icon" src="@/assets/images/copy.svg" />
+        <img @click.stop="doRemove" class="options-icon" src="@/assets/images/remove.svg" />
+      </div> -->
     </div>
   </li>
 </template>
@@ -45,7 +45,7 @@ const doClick = () => {
   changePage(props.item.__id)
 }
 const onDBClick = () => {
-  editName.value = true
+  // editName.value = true
 }
 const onBlur = (e) => {
   props.item.name = e.target.value

@@ -30,10 +30,10 @@ const props = defineProps({
 const originObject = ref(null)
 const rowsObject = ref(null)
 
-watch(() => props.target, (newValue) => {
-  originObject.value = findOneById('origin', newValue.__id)
-  rowsObject.value = findOneById('row', newValue.__id)
-})
+// watch(() => props.target, (newValue) => {
+//   originObject.value = findOneById('origin', newValue.__id)
+//   rowsObject.value = findOneById('row', newValue.__id)
+// })
 
 const isList = computed(() => props.target ? checkList(props.target.type) : false)
 

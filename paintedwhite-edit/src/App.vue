@@ -1,8 +1,6 @@
 <template>
   <header style="-webkit-app-region: drag;">
     <section style="-webkit-app-region: no-drag; width: 20%; overflow: hidden">
-      <img class="header-icon" @click="doClose" src="@/assets/images/close.svg" />
-      <img class="header-icon" @click="doMinimize" src="@/assets/images/min.svg" />
       <template v-if="inProcess">
         <img class="header-icon" @click="doOuter" src="@/assets/images/out.svg" />
         <img class="header-icon" v-if="isFullScreen" @click="triggerFullScreen" src="@/assets/images/right-rect.svg" />
@@ -187,7 +185,6 @@
     "name": "Home",
     "status": ["normal"]
   };
-
 
 
   provide('pages', ref([ _testJSON ]))

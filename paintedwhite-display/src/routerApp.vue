@@ -10,23 +10,29 @@
         </div>
       </div>
     </transition>
+
+
     <div class="content" :style="style" ref="content">
       <transition :name="transitionName">
         <router-view></router-view>
       </transition>
     </div>
-    <transition name="navi">
+
+
+   <!--  <transition name="navi">
       <div class="navi" :style="safeArea" v-if="$route.meta.tabbar">
         <router-link v-for="(n, i) in navi" class="navi_item"
           :key="i" :to="{ path: n.path, query: $route.query }" custom v-slot="{ navigate, isActive }">
           <li @click="navigate" @keypress.enter="navigate" role="link" :class="isActive ? 'router-link-active' : ''">
             <img class="navi_icon" :src="isActive ? n.icon.active : n.icon.normal" />
             <div class="navi_title">{{n.name}}</div>
-            <!-- <div class="navi_bridge"></div> -->
+            <div class="navi_bridge"></div>
           </li>
         </router-link>
       </div>
-    </transition>
+    </transition> -->
+
+
   </div>
 </template>
 
@@ -37,6 +43,7 @@ import utils from '@/assets/js/utils'
 import Renderer from '@/renderer/index'
 
 Vue.use(Renderer)
+
 
 export default {
   name: 'router.app',
@@ -157,7 +164,7 @@ body {
 .content {
   width: 100%;
   position: fixed;
-  overflow-y: scroll;
+  /*overflow-y: scroll;*/
   will-change: transform;
   /* transition: all 0.1s ease-out; */
 }
@@ -258,5 +265,10 @@ a:hover {
 .header-leave-to {
   opacity: 0;
   transform: translate(50%, -50%);
+}
+
+.layer_selected {
+  box-sizing: content-box;
+  border: #ff0000 dashed 1px!important;
 }
 </style>
