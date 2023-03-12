@@ -18,7 +18,8 @@ var Home = {
     ready_Home (c) { // 页面已渲染完成
 
       _self = this;
-     
+      
+      console.log(_self.elements)
 
       this.$worker().dom('table').setRows([
         {
