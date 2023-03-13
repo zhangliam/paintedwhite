@@ -1,7 +1,7 @@
 <template>
   <div class="mock" :style="mockStyle">
     <div class="mock-bridge" ref="bridge" :style="bridgeStyle">
-      <iframe v-show="!loading" ref="mock" src="http://localhost:8081/#/home" ></iframe>
+      <iframe v-show="!loading" ref="mock" src="http://192.168.61.126:8081/#/home" ></iframe>
     </div>
   </div>
 </template>
@@ -112,6 +112,7 @@ window.addEventListener('message', (e) => {
       // }, 500)
       break
     case 'SELECT_LAYER':
+      debugger
       layerID.value = e.data.__id
       break
     case 'MODEL_ACTIONS':

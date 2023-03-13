@@ -1,5 +1,22 @@
 import LOGGER from '@/assets/js/logger'
 
+let timer = null;
+function throttle (fn, wait) {
+  return function () {
+    let context = this;
+    let args = arguments;
+    if (timer) {
+      return
+    }
+
+    timer = setTimeout(function() {
+      timer = null;
+    }, wait)
+
+    fn.apply(context, args);
+  }
+}
+
 /**
  * @class Dispatcher
  * 触发器
@@ -31,9 +48,11 @@ export default {
       }
     },
     executeListener (evtName, params) {
+
       let fakename = evtName + '_' + this.item.__id
       let nickname = evtName + '_' + this.item.name
       let events = this.page ? this.page.eventListeners : this.eventListeners
+
       if (events) {
         if (events[fakename]) {
           this.logger.add(LOGGER.FUNCTION, fakename)
@@ -43,6 +62,17 @@ export default {
           events[nickname].call(this.page || this, params)
         }
       }
-    }
+
+      // if(params.target && params.target.id) {
+      //   throttle(window.parent.postMessage, 100)({
+      //     command: 'SELECT_LAYER',
+      //     layer: params.target.id
+      //   }, '*')
+      // }
+
+      // http://192.168.61.126:8080
+
+
+    },
   }
 }
