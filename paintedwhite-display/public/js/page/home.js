@@ -91,6 +91,7 @@ window.addEventListener('message', (e) => {
         })
       }
 
+      // _self.elements[data.target].$el.innerText = data.newValue
       console.log(_self.elements[data.target])
       break;
 

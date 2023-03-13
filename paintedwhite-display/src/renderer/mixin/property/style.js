@@ -49,5 +49,10 @@ export default {
         this.insertOrUpdateData(this.style, { display: 'none' })
       }
     },
+
+    setStyle (obj) {
+      this.insertOrUpdateData(this.style, obj)
+    }
+
   }
 }

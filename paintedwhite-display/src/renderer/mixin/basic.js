@@ -51,8 +51,7 @@ export default {
     },
     options: {
       handler () {
-        debugger
-        this.optionsUpdated()
+        this.optionsUpdated && this.optionsUpdated()
       },
       deep: true
     }

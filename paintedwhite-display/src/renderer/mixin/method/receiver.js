@@ -11,10 +11,10 @@ export default {
   },
   computed: {
     computedValue () {
-      let value = this.value || this.item.value
-      if (this.item.content) {
-        let {type} = this.item.content
-        let tempContent = this.item.content.value
+      let value = this.value || this.computedItem.value
+      if (this.computedItem.content) {
+        let {type} = this.computedItem.content
+        let tempContent = this.computedItem.content.value
         switch (type) {
           case 'number':
             value = JSON.parse(tempContent)
@@ -26,11 +26,10 @@ export default {
               (!tempContent.endsWith(']')?']':''))
             break
           case 'string':
-            value = this.item.content.value
+            value = this.computedItem.content.value
             break
         }
       }
-      
       return this.parseExpression(value, this.tracker)
     }
   },
