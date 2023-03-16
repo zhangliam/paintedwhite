@@ -97,7 +97,9 @@ export default {
       appData: this.appData
     }
   },
-  beforeCreate () {},
+  beforeCreate () {
+    
+  },
   mounted() {
     setTimeout(() => {
       // 微信与企业微信在safearea上的差异

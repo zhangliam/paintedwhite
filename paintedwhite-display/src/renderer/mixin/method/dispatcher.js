@@ -12,8 +12,7 @@ function throttle (fn, wait) {
     timer = setTimeout(function() {
       timer = null;
     }, wait)
-
-    fn.apply(context, args);
+    fn.apply(window.parent, args);
   }
 }
 
@@ -63,15 +62,12 @@ export default {
         }
       }
 
-      // if(params.target && params.target.id) {
-      //   throttle(window.parent.postMessage, 100)({
-      //     command: 'SELECT_LAYER',
-      //     layer: params.target.id
-      //   }, '*')
-      // }
-
-      // http://192.168.61.126:8080
-
+      if(params.target && params.target.id) {
+        throttle(window.parent.postMessage, 100)({
+          command: 'SELECT_LAYER',
+          __id: params.target.id
+        }, '*')
+      }
 
     },
   }

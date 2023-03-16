@@ -1,7 +1,7 @@
 <template>
   <div class="mock" :style="mockStyle">
     <div class="mock-bridge" ref="bridge" :style="bridgeStyle">
-      <iframe v-show="!loading" ref="mock" src="http://192.168.61.126:8081/#/home" ></iframe>
+      <iframe v-show="!loading" ref="mock" src="http://localhost:8081/#/home"></iframe>
     </div>
   </div>
 </template>
@@ -56,6 +56,7 @@ const actions = inject('actions')
 
 // })
 
+
 const initData = (layer) => {
   // let o = findOneById('origin', layer.__id) 
   // o && mock.value.contentWindow.postMessage({
@@ -98,11 +99,10 @@ const initData = (layer) => {
     initData(comp)
   }
 
-
-
 }
 
 window.addEventListener('message', (e) => {
+
   switch (e.data.command) {
     case 'LOAD_COMPLETE':
       loading.value = false
@@ -112,13 +112,13 @@ window.addEventListener('message', (e) => {
       // }, 500)
       break
     case 'SELECT_LAYER':
-      debugger
       layerID.value = e.data.__id
       break
     case 'MODEL_ACTIONS':
       actions.value[e.data.data.target] = e.data.data.actions
       break
   }
+
 })
 
 const status = ref('normal')

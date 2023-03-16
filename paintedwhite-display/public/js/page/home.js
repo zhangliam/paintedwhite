@@ -23,7 +23,7 @@ var Home = {
       // console.log(_self.elements)
 
       window.addEventListener('message', (e) => {
-  
+
         const data = e.data.data && JSON.parse(e.data.data)
 
         switch (e.data.command) {
@@ -63,13 +63,10 @@ var Home = {
                 [data.prop.replace('config.', '')]: data.newValue
               })
             } else {
-              console.log(data.newValue)
              _self.elements[data.target].setItem({
                 [data.prop]: data.newValue
               })
             }
-
-            //console.log(_self.elements[data.target])
             break;
 
           // case 'UPDATE_STATUS':

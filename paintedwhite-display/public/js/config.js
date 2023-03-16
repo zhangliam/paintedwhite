@@ -65,3 +65,5 @@ window.config = {
     logger.log(logger.APP, 'ga', target, event, data)
   }
 }
+
+
