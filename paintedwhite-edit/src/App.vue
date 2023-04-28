@@ -18,7 +18,6 @@
   import { executeRedoAction, executeUndoAction } from "./utils/crud"
   // import { installIPC } from './utils/ipc'
 
-
   const doOuter = () => {}
 
   const triggerFullScreen = () => {

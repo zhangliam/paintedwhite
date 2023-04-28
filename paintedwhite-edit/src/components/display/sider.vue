@@ -1,7 +1,7 @@
 <template>
   <div class="sider">
     <div class="sider-logo">
-      <div class="sider-logo-title"></div>
+      <div class="sider-logo-title"><input type="file" id="fileInput"></div>
     </div>
     <div class="sider-content">
       <SiderPage></SiderPage>
@@ -11,8 +11,29 @@
 </template>
 
 <script setup>
+import { nextTick, onMounted, provide, ref } from 'vue';
 import SiderPage from './sider/page.vue'
 import SiderLayer from './sider/layer.vue'
+
+
+onMounted( () => {
+  const fileInput = document.getElementById('fileInput');
+  fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0]
+      const reader = new FileReader()
+
+      reader.onload = function () {
+        console.log(JSON.parse(reader.result))
+      }
+
+      reader.onerror = function() {
+        console.log(reader.error)
+      };
+      reader.readAsText(file)
+  })
+})
+
+
 </script>
 
 <style lang="less">
