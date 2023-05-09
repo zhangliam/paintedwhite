@@ -18,6 +18,7 @@ import { inject } from '@vue/runtime-core'
 // import prompt from '../../prompt'
 const { path, ipcRenderer } = window
 
+
 const pages = inject('pages')
 const config = inject('config')
 const filePath = inject('filePath')

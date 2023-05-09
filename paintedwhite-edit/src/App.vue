@@ -12,14 +12,23 @@
 </template>
 
 <script setup>
+  import axios from 'axios';
   import { computed, ref } from "@vue/reactivity"
-  import { provide } from "@vue/runtime-core"
+  import { provide, onMounted } from "@vue/runtime-core"
   import { useRoute } from 'vue-router'
   import { executeRedoAction, executeUndoAction } from "./utils/crud"
   // import { installIPC } from './utils/ipc'
 
-  const doOuter = () => {}
+  // @接口文档地址
+  // http://192.168.60.237:9999/swagger-ui/index.html?urls.primaryName=blank-api-admin
+  // http://192.168.60.237:9999/blank/paper/getPaperJson/18?TERMINAL-TYPE=to_c
+  // qs && JSON.stringify
 
+  axios.defaults.baseURL = 'http://192.168.60.237:9999';
+  axios.defaults.headers.common['TENANT-ID'] = 4
+  axios.defaults.headers.common['Authorization'] = 'Bearer 2901455d-7f82-4d81-813e-77223c9af051';
+
+  const doOuter = () => {}
   const triggerFullScreen = () => {
     isFullScreen.value = !isFullScreen.value
   }
@@ -28,7 +37,7 @@
   const inProcess = computed(() => route.path !== '/')
 
   const isFullScreen = ref(false)
-
+  const PAGEINFO = ref(null)
 
   const _testJSON = {
     "class": "",
@@ -185,13 +194,35 @@
     "status": ["normal"]
   };
 
-
-  provide('pages', ref([ _testJSON ]))
   provide('config', ref({version: 3.5, pages: {}, path: ''}))
   provide('filePath', ref(''))
   provide('fileName', ref(''))
   provide('orientation', ref(true))
   provide('fullscreen', isFullScreen)
+  provide('pages', PAGEINFO)
+
+  onMounted( () => {
+    console.log('onMounted')
+    getDesignMoudleInfo()
+  })
+
+  async function getDesignMoudleInfo(id=18) {
+    try {
+      const { status, data } = await axios.get(`/blank/paper/getPaperJson/${ id }`, {
+        params: {
+          'TERMINAL-TYPE': 'to_c'
+        }
+      })
+
+      if(status === 200) {
+        PAGEINFO.value = [].concat(data.data)
+        console.log(PAGEINFO.value)
+      }
+      
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   // installIPC(ipcRenderer, getCurrentInstance().provides)
 

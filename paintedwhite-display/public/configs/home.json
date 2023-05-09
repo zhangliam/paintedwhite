@@ -32,7 +32,7 @@
           "top": "0px",
           "left": "156px"
         },
-        "value": "http://cce-blank.oss-cn-hangzhou.aliyuncs.com/1/5/images/编组 6.png",
+        "value": "images/编组 6.png",
         "components": [{
           "__id": "BAE9E8F3-A8F8-4ECD-A088-535C5FD7A788",
           "name": "BAE9E8F3-A8F8-4ECD-A088-535C5FD7A788",
@@ -143,7 +143,7 @@
         "top": "0px",
         "left": "0px"
       },
-      "value": "http://cce-blank.oss-cn-hangzhou.aliyuncs.com/1/4/images/ANIMzoltar.png",
+      "value": "/images/ANIMzoltar.png",
       "components": [],
       "config": {
         "mode": "aspectFill"
