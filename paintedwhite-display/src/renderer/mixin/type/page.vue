@@ -167,6 +167,9 @@ export default {
     async getConfig () {
       this.logger.add(LOGGER.FRAMEWORK_FUN, 'load')
       let str = await this.$http.get(api.RESOURCE_URL + this.file)
+      
+      
+      
       this.initDisplayObject(str)
       this.status = this.item.status[0]
       /**
@@ -179,6 +182,7 @@ export default {
       this.fireEvent('created', utils.getQueryObject())
     },
     initDisplayObject (str) {
+      
       this.logger.add(LOGGER.FRAMEWORK_FUN, 'initDisplayObject')
       let config = utils.JSON(str) || {}
       this.$store.commit('INIT_PROVIDOR', config.__id)

@@ -34,8 +34,21 @@ export default {
     }
   },
   created () {
+    const _self = this
     this.logger.start(`${this.type}[${this.id}]`)
     this.logger.add(LOGGER.VUE_COMPONENT_LIFECYCLE, 'created', this.item.name)
+
+
+    // window.addEventListener('message', (e) => {
+
+    //   switch (e.data.command) {
+    //     case 'POST_DESIGNDRAFT_JSON':
+    //       const { data } = e.data
+    //       _self.initDisplayObject(JSON.parse(data))
+    //       break
+    //   }
+    // })
+    
     this.initDisplayObject()
   },
   methods: {

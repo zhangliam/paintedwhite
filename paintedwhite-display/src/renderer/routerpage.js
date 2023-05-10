@@ -21,6 +21,8 @@ export default {
       this.file = val
     }
   },
-  beforeCreate () {},
+  beforeCreate () {
+
+  },
   methods: {}
 }

@@ -7,7 +7,9 @@ window.config = {
    * 变量来自 js/page/*.js, 并需要在 index.html 中加载引用
    */
   pages: [
-    Loading, Home, Form
+    Home,
+    Loading, 
+    Form,
   ],
   /**
    * swiper 设置
@@ -31,7 +33,7 @@ window.config = {
      */
     {
       name: 'HOME',
-      path: '/home',
+      path: '/',
       icon: {
         "normal": "/images/home_normal.svg",
         "active": "/images/home_active.svg"

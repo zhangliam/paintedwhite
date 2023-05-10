@@ -12,22 +12,29 @@
 </template>
 
 <script setup>
-import BoxPage from './box/page.vue'
-import { VueDraggableNext as draggable } from 'vue-draggable-next'
-import { inject } from '@vue/runtime-core'
-// import prompt from '../../prompt'
-const { path, ipcRenderer } = window
+  import { inject, watch  } from '@vue/runtime-core'
+  import BoxPage from './box/page.vue'
+  import { VueDraggableNext as draggable } from 'vue-draggable-next'
+  // import prompt from '../../prompt'
 
+  const { path, ipcRenderer } = window
+  const pages = inject('pages')
+  const config = inject('config')
+  const filePath = inject('filePath')
+  const defaultSelectedPage = inject('page')
 
-const pages = inject('pages')
-const config = inject('config')
-const filePath = inject('filePath')
+  watch(pages, () => {
+    const { length } = pages.value
+    // 默认选中首个渲染数据
+    length && (defaultSelectedPage.value = pages.value[0])
+  })
 
-const showCreate = () => {
-  if (filePath.value) {
-    ipcRenderer.send('CREATE_PAGE', filePath.value)
-  }
-}
+  // const showCreate = () => {
+  //   if (filePath.value) {
+  //     ipcRenderer.send('CREATE_PAGE', filePath.value)
+  //   }
+  // }
+
 </script>
 
 <style lang="less">

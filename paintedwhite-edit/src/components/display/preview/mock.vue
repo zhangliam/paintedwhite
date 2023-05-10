@@ -1,7 +1,7 @@
 <template>
   <div class="mock" :style="mockStyle">
     <div class="mock-bridge" ref="bridge" :style="bridgeStyle">
-      <iframe v-show="!loading" ref="mock" src="http://localhost:8080/#/home"></iframe>
+      <iframe v-show="!loading" ref="mock" src="http://localhost:8080/#/"></iframe>
     </div>
   </div>
 </template>
@@ -43,9 +43,16 @@ const config = inject('config')
 const actions = inject('actions')
 
 
-// 切换页面后期Q2再支持多页面解析
-// watch(page, () => {
+watch(page, () => {
+  mock.value.contentWindow.postMessage({
+    command: 'POST_DESIGNDRAFT_JSON',
+    data: JSON.stringify(page.value)
+  }, '*')
+})
 
+
+// 页面切换
+// watch(page, () => {
 //   if (mock.value && mock.value.contentWindow) {
 //     loading.value = true
 //     mock.value.contentWindow.postMessage({
@@ -53,30 +60,32 @@ const actions = inject('actions')
 //       page: JSON.stringify(page.value)
 //     }, '*')
 //   }
-
 // })
 
 
 const initData = (layer) => {
-  // let o = findOneById('origin', layer.__id) 
-  // o && mock.value.contentWindow.postMessage({
-  //   command: 'UPDATE_ORIGIN',
-  //   data: JSON.stringify({
-  //     target: layer.__id,
-  //     newValue: o
-  //   })
-  // }, '*')
-  // let r = findOneById('row', layer.__id)
-  // r && mock.value.contentWindow.postMessage({
-  //   command: 'UPDATE_ROWS',
-  //   data: JSON.stringify({
-  //     target: layer.__id,
-  //     newValue: r
-  //   })
-  // }, '*')
-  // for (let comp of layer.components) {
-  //   initData(comp)
-  // }
+  
+  let o = findOneById('origin', layer.__id) 
+  o && mock.value.contentWindow.postMessage({
+    command: 'UPDATE_ORIGIN',
+    data: JSON.stringify({
+      target: layer.__id,
+      newValue: o
+    })
+  }, '*')
+
+  let r = findOneById('row', layer.__id)
+  r && mock.value.contentWindow.postMessage({
+    command: 'UPDATE_ROWS',
+    data: JSON.stringify({
+      target: layer.__id,
+      newValue: r
+    })
+  }, '*')
+
+  for (let comp of layer.components) {
+    initData(comp)
+  }
 
 
   mock.value.contentWindow.postMessage({

@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+
+    
     <transition name="header">
       <div class="header" v-if="$route.meta.navigator">
         <div @click.prevent="goBack">

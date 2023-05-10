@@ -11,31 +11,37 @@ var Loading = {
     depth: 0, // 页面层级
   },
   methods: {
-    ready_Loading() { // 页面已渲染完成
+    ready_Loading() { 
+
+      // 页面已渲染完成
       logger.log(logger.APP, 'ready_Loading')
       // 隐藏元素
       this.$worker().dom('loading').hide()
-      this.$worker().wx().config()
-      this.$worker().dialog().confirm({
-        text: this.$locale({i: `oauth.wechat`}),
-        opts: [
-          {
-            txt: this.$locale({i: `oauth.next`}),
-            color: 'red',
-            stay: false,
-            callback: () => {
-              this.$router.push('/home')
-            }
-          },
-          {
-            txt: this.$locale({i: `oauth.stay`}),
-            stay: false,
-            callback: () => {
-              // console.log(this.$locale({i: `oauth.stay`}))
-            }
-          }
-        ]
-      })
+
+      this.$router.push('/home')
+
+      // this.$worker().wx().config()
+      // this.$worker().dialog().confirm({
+      //   text: this.$locale({i: `oauth.wechat`}),
+      //   opts: [
+      //     {
+      //       txt: this.$locale({i: `oauth.next`}),
+      //       color: 'red',
+      //       stay: false,
+      //       callback: () => {
+      //         this.$router.push('/home')
+      //       }
+      //     },
+      //     {
+      //       txt: this.$locale({i: `oauth.stay`}),
+      //       stay: false,
+      //       callback: () => {
+      //         // console.log(this.$locale({i: `oauth.stay`}))
+      //       }
+      //     }
+      //   ]
+      // })
+
     }
   }
 }

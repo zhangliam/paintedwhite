@@ -21,6 +21,7 @@ var Home = {
       _self = this;
       
       // console.log(_self.elements)
+      logger.log(logger.APP, 'ready_Home')
 
       window.addEventListener('message', (e) => {
 
@@ -94,17 +95,7 @@ var Home = {
       })
 
 
-      // this.$worker().dom('table').setRows([
-      //   {
-      //     label: 'Menu1'
-      //   },
-      //   {
-      //     label: 'Menu2'
-      //   },
-      //   {
-      //     label: 'Menu3'
-      //   }
-      // ])
+    
     },
 
     itemClicked_table(c) {
