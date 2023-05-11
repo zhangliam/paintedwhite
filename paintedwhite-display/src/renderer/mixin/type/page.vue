@@ -75,7 +75,8 @@ export default {
       animations: {},
       status: 'normal',
       type: 'page',
-      ready: false
+      ready: false,
+      lastElements: null,
     }
   },
   computed: {
@@ -86,8 +87,9 @@ export default {
   },
   watch: {
     file () {
-      this.getConfig()
-    }
+      // 页面切换监控
+      //this.getConfig()
+    },
   },
   provide () {
     return {
@@ -164,14 +166,91 @@ export default {
     this.fireEvent('destory')
   },
   methods: {
-    async getConfig () {
+    getConfig () {
+
       this.logger.add(LOGGER.FRAMEWORK_FUN, 'load')
-      let str = await this.$http.get(api.RESOURCE_URL + this.file)
       
-      
-      
-      this.initDisplayObject(str)
-      this.status = this.item.status[0]
+      const _self = this
+      window.addEventListener('message', (e) => {
+        const parseJson = JSON.parse(e.data?.data || "{}")
+
+        switch (e.data.command) {
+          case 'POST_DESIGNDRAFT_JSON':
+            const { data } = e.data
+            _self.initDisplayObject(data)
+            _self.status = _self.item.status[0]
+            break
+
+          case 'SELECT_LAYER':
+            let { layer } = e.data;
+            // console.log(_self.elements[layer].$el)
+            if(this._lastElements) {
+              this._lastElements.classList.remove('layer_selected');
+              this._lastElements = null;
+            }
+            this._lastElements = _self.elements[layer].$el;
+            _self.elements[layer].$el.classList.add('layer_selected');
+            break;
+
+          case 'UPDATE_PROP':
+            if (parseJson.prop.startsWith('style.')) {
+              _self.elements[parseJson.target].setStyle({
+                [parseJson.prop.replace('style.', '')]: parseJson.newValue
+              })
+            } else if (parseJson.prop.startsWith('config.')) {
+              _self.elements[parseJson.target].setConfig({
+                [parseJson.prop.replace('config.', '')]: parseJson.newValue
+              })
+            } else {
+              _self.elements[parseJson.target].setItem({
+                [parseJson.prop]: parseJson.newValue
+              })
+            }
+            break;
+
+          case 'UPDATE_VISIBLE':
+            _self.elements[parseJson['layer']].setVisible(parseJson.invisible)
+            break;
+
+            // case 'LOAD_CSS':
+            //   loadCss(e.data.path, e.data.files)
+            //   break;
+
+            // case 'CHANGE_PAGE':
+            //   console.time('mounted')
+            //   isChanged = true
+            //   layerID.value = ''
+            //   Object.keys(elements.value).forEach(el => {
+            //     delete elements.value[el]
+            //   })
+            //   dataSource.value = JSON.parse(e.data.page)
+            //   break;    
+
+            // case 'UPDATE_STATUS':
+            //   elements.value[data.target].setStatus(JSON.parse(data.newValue))
+            //   break;
+
+            // case 'UPDATE_ORIGIN':
+            //   elements.value[data.target].setOrigin(JSON.parse(data.newValue))
+            //   break;
+
+            // case 'UPDATE_ROWS':
+            //   elements.value[data.target].setRows(JSON.parse(data.newValue))
+            //   break;
+
+            // case 'UPDATE_ACTION':
+            //   changeAction(data.target, data.action)
+            //   break;
+        }
+      })
+
+      /* 
+        原读取本地public目录
+      */
+      // let str = await this.$http.get(api.RESOURCE_URL + this.file)
+      // this.initDisplayObject(str)
+      // this.status = this.item.status[0]
+
       /**
        * 当前组件进入created生命周期
        *

@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { computed, inject, ref, watch } from 'vue'
+import { computed, inject, ref, watch, nextTick } from 'vue'
 import mitt from '@/utils/mitt'
 import { findOneById } from '../../../utils/lowdb'
 
@@ -44,10 +44,14 @@ const actions = inject('actions')
 
 
 watch(page, () => {
-  mock.value.contentWindow.postMessage({
-    command: 'POST_DESIGNDRAFT_JSON',
-    data: JSON.stringify(page.value)
-  }, '*')
+
+  setTimeout(() => {
+    mock.value.contentWindow.postMessage({
+      command: 'POST_DESIGNDRAFT_JSON',
+      data: JSON.stringify(page.value)
+    }, '*')
+  }, 1000)
+
 })
 
 

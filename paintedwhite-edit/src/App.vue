@@ -208,8 +208,8 @@
   provide('fileName', ref(''))
   provide('orientation', ref(true))
   provide('fullscreen', isFullScreen)
-  //provide('pages', PAGEINFO)
-  provide('pages', [localPageInfo])
+  provide('pages', PAGEINFO)
+  // provide('pages', [localPageInfo])
 
   async function getDesignMoudleInfo(id=18) {
     try {
@@ -229,11 +229,10 @@
   }
 
   onMounted( () => {
-    // getDesignMoudleInfo()
+    getDesignMoudleInfo()
   })
 
   // installIPC(ipcRenderer, getCurrentInstance().provides)
-
   window.addEventListener('keydown', (e) => {
     if (e.key == 'z') {
       if ((e.ctrlKey || e.metaKey)) {
