@@ -16,6 +16,7 @@
   import { nextTick, onMounted, provide, inject, ref} from 'vue';
   import SiderPage from './sider/page.vue'
   import SiderLayer from './sider/layer.vue'
+  import htmlformat from 'html-format'
 
   let wxContent = ""
   let wxss = ""
@@ -31,7 +32,7 @@
     console.log()
     const toObjectNode = Object.assign({}, JSON.parse(temp_stringify))
     json2wx(toObjectNode)
-    console.log(wxContent, wxss, classIndex)
+    console.log(htmlformat(wxContent), wxss, classIndex)
     // downloadDoc('hello word', JSON.stringify(exportOriginPageInfo.value))
   }
 
@@ -63,20 +64,20 @@
     if (node.__id) {
       let style = ""
       for (const key in node.style) {
-        style += `${key}:${node.style[key]};`
+        style += `  ${key}:${node.style[key]};\n`
       }
       classIndex++
       switch (node.type) {
         case "basic-container-div":
-          wxContent += `  <view class="view-${classIndex}">\n`
+          wxContent += ` <view class="view-${classIndex}">\n`
           if (node.components.length) {
             node.style["z-index"] = 1 
-            style += "z-index:1;"
+            style += "  z-index:1;"
           }
-          wxss += `.view-${classIndex}{${style}}\n`
+          wxss += `.view-${classIndex} { \n ${style} \n }\n\n`
           break;
         case "basic-layer-image":
-          wxContent += `  <image class="image-${classIndex}" src="${node.value}" />\n`
+          wxContent += `<image class="image-${classIndex}" src="${node.value}" />\n`
           // if (maskFrame) {
           //   let itemFrame = {
           //     width: node.style.width,
@@ -106,15 +107,15 @@
           //     }
           //   }
           // }
-          wxss += `.image-${classIndex}{${style}}\n`
+          wxss += `.image-${classIndex} { \n ${style} \n }\n\n`
           break;
         case "basic-layer-text":
-          wxContent += `  <text class="text-${classIndex}">${node.value}`
-          wxss += `.text-${classIndex}{${style}}\n`
+          wxContent += `<text class="text-${classIndex}">${node.value}</text>`
+          wxss += `.text-${classIndex} { \n ${style} \n }\n\n`
           break;
         default:
           wxContent += `<view class="page">\n`
-          wxss += `.page{${style}}\n`
+          wxss += `.page { \n ${style} \n }\n\n`
           break;
       }
 
@@ -140,10 +141,10 @@
           wxContent += `</view>\n`
           break;
         case "basic-layer-image":
-          wxContent += `\n`
+          wxContent += ``
           break;
         case "basic-layer-text":
-          wxContent += `</text>\n`
+          wxContent += `\n`
           break;
         default:
           wxContent += `</view>\n`
