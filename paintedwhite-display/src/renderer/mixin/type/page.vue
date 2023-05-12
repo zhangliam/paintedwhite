@@ -88,7 +88,7 @@ export default {
   watch: {
     file () {
       // 页面切换监控
-      //this.getConfig()
+      // this.getConfig()
     },
   },
   provide () {
@@ -184,11 +184,11 @@ export default {
           case 'SELECT_LAYER':
             let { layer } = e.data;
             // console.log(_self.elements[layer].$el)
-            if(this._lastElements) {
-              this._lastElements.classList.remove('layer_selected');
-              this._lastElements = null;
+            if(_self._lastElements) {
+              _self._lastElements.classList.remove('layer_selected');
+              _self._lastElements = null;
             }
-            this._lastElements = _self.elements[layer].$el;
+            _self._lastElements = _self.elements[layer].$el;
             _self.elements[layer].$el.classList.add('layer_selected');
             break;
 

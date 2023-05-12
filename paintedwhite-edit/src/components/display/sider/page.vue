@@ -21,13 +21,16 @@
   const pages = inject('pages')
   const config = inject('config')
   const filePath = inject('filePath')
-  const defaultSelectedPage = inject('page')
+  let defaultSelectedPage = inject('page')
 
-  watch(pages, () => {
-    const { length } = pages.value
-    // 默认选中首个渲染数据
-    length && (defaultSelectedPage.value = pages.value[0])
-  })
+  /* 同步渲染 */ 
+  defaultSelectedPage.value = pages.value[0]
+  
+  // watch(pages, () => {
+  //   const { length } = pages.value
+  //   // 默认选中首个渲染数据
+  //   length && (defaultSelectedPage.value = pages.value[0])
+  // })
 
   // const showCreate = () => {
   //   if (filePath.value) {
