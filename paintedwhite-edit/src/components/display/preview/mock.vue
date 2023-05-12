@@ -1,7 +1,7 @@
 <template>
   <div class="mock" :style="mockStyle">
     <div class="mock-bridge" ref="bridge" :style="bridgeStyle">
-      <iframe v-show="!loading" ref="mock" src="http://localhost:8080/#/"></iframe>
+      <iframe v-show="!loading" ref="mock" @load="frameLoadCallback" src="http://localhost:8080/#/"></iframe>
     </div>
   </div>
 </template>
@@ -42,18 +42,26 @@ const layerID = inject('layerID')
 const config = inject('config')
 const actions = inject('actions')
 
-watch(page, () => {
+
+function frameLoadCallback() {
+  /* 同步渲染 */ 
   setTimeout(() => {
     mock.value.contentWindow.postMessage({
       command: 'POST_DESIGNDRAFT_JSON',
       data: JSON.stringify(page.value)
     }, '*')
-  }, 1000)
-})
+  }, 0)
+  // watch(page, () => {
+  //   setTimeout(() => {
+  //     mock.value.contentWindow.postMessage({
+  //       command: 'POST_DESIGNDRAFT_JSON',
+  //       data: JSON.stringify(page.value)
+  //     }, '*')
+  //   }, 1000)
+  // })
+}
 
-/*
-  页面切换backup
-*/ 
+// 页面切换backup
 // watch(page, () => {
 //   if (mock.value && mock.value.contentWindow) {
 //     loading.value = true

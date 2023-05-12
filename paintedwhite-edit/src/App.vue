@@ -14,7 +14,7 @@
 <script setup>
   import axios from 'axios';
   import { computed, ref } from "@vue/reactivity"
-  import { provide, onMounted } from "@vue/runtime-core"
+  import { provide, inject, onMounted } from "@vue/runtime-core"
   import { useRoute } from 'vue-router'
   import { executeRedoAction, executeUndoAction } from "./utils/crud"
   // import { installIPC } from './utils/ipc'
@@ -38,7 +38,9 @@
 
   const isFullScreen = ref(false)
   const PAGEINFO = ref(null)
+   // provide('pages', PAGEINFO)
 
+  /* 同步渲染 */ 
   const localPageInfo = {
       "class": "",
       "style": {},
@@ -202,15 +204,15 @@
       "name": "Home",
       "status": ["normal"]
   }
+  provide('pages', ref([localPageInfo]))
 
   provide('config', ref({version: 3.5, pages: {}, path: ''}))
   provide('filePath', ref(''))
   provide('fileName', ref(''))
   provide('orientation', ref(true))
   provide('fullscreen', isFullScreen)
-  provide('pages', PAGEINFO)
-  // provide('pages', [localPageInfo])
-
+ 
+  
   async function getDesignMoudleInfo(id=18) {
     try {
       const { status, data } = await axios.get(`/blank/paper/getPaperJson/${ id }`, {
@@ -218,18 +220,14 @@
           'TERMINAL-TYPE': 'to_c'
         }
       })
-
-      if(status === 200) {
-        PAGEINFO.value = [].concat(data.data)
-      }
-      
+      status === 200 && (PAGEINFO.value = [].concat(data.data))
     } catch (error) {
       console.error(error)
     }
   }
 
   onMounted( () => {
-    getDesignMoudleInfo()
+    // getDesignMoudleInfo()
   })
 
   // installIPC(ipcRenderer, getCurrentInstance().provides)

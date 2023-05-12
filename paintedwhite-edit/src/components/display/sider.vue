@@ -2,7 +2,7 @@
   <div class="sider">
     <div class="sider-logo">
       <!-- <div class="sider-logo-title"><input type="file" id="fileInput"></div> -->
-      <button>导出</button>
+      <a @click="exportCodeMoudle" class="sider-exportbtn">导出</a>
     </div>
     <div class="sider-content">
       <SiderPage></SiderPage>
@@ -12,11 +12,153 @@
 </template>
 
 <script setup>
-  import { nextTick, onMounted, provide, ref } from 'vue';
+
+  import { nextTick, onMounted, provide, inject, ref} from 'vue';
   import SiderPage from './sider/page.vue'
   import SiderLayer from './sider/layer.vue'
+  import htmlformat from 'html-format'
+
+  let wxContent = ""
+  let wxss = ""
+  let classIndex = 0
+  // wxJson = getWxJson()
+  // wxJs = this.getWxJS()
+  
+
+  const exportOriginPageInfo = inject('page')
+
+  const exportCodeMoudle = () => {
+    const temp_stringify = JSON.stringify(exportOriginPageInfo.value)
+    console.log()
+    const toObjectNode = Object.assign({}, JSON.parse(temp_stringify))
+    json2wx(toObjectNode)
+    console.log(htmlformat(wxContent), wxss, classIndex)
+    // downloadDoc('hello word', JSON.stringify(exportOriginPageInfo.value))
+  }
+
+  const downloadDoc = (filename, text) => {
+    let element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent('\n\n\n' + text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  }
+
+   // 判断元素是否在蒙版中
+  const isInMask = (maskFrame, itemFrame) => {
+    if ((parseFloat(itemFrame.top) + parseFloat(itemFrame.height) < parseFloat(maskFrame.top)) || (parseFloat(itemFrame.top) > parseFloat(maskFrame.top) + parseFloat(maskFrame.height)) || (parseFloat(itemFrame.left) + parseFloat(itemFrame.width) < parseFloat(maskFrame.left)) || (parseFloat(itemFrame.left) > parseFloat(maskFrame.left) + parseFloat(maskFrame.width))) {
+      return false
+    }
+    else {
+      return true
+    }
+  }
+
+  const json2wx = (node, maskFrame = null) => {
+    if (!node) return;
+    if (node.__id) {
+      let style = ""
+      for (const key in node.style) {
+        style += `  ${key}:${node.style[key]};\n`
+      }
+      classIndex++
+      switch (node.type) {
+        case "basic-container-div":
+          wxContent += ` <view class="view-${classIndex}">\n`
+          if (node.components.length) {
+            node.style["z-index"] = 1 
+            style += "  z-index:1;"
+          }
+          wxss += `.view-${classIndex} { \n ${style} \n }\n\n`
+          break;
+        case "basic-layer-image":
+          wxContent += `<image class="image-${classIndex}" src="${node.value}" />\n`
+          // if (maskFrame) {
+          //   let itemFrame = {
+          //     width: node.style.width,
+          //     height: node.style.height,
+          //     top: node.style.top,
+          //     left: node.style.left,
+          //   }
+          //   // console.log('%c [ maskFrame ]-445', maskFrame)
+          //   // console.log('%c [ itemFrame ]-446', itemFrame)
+          //   if (isInMask(maskFrame, itemFrame)) {
+          //     if (parseFloat(itemFrame.width) > parseFloat(maskFrame.width)) {
+          //       node.style.width = maskFrame.width
+          //     }
+          //     if (parseFloat(itemFrame.height) > parseFloat(maskFrame.height)) {
+          //       node.style.height = maskFrame.height
+          //     }
+          //     if (parseFloat(itemFrame.top) < parseFloat(maskFrame.top)) {
+          //       node.style.top = maskFrame.top
+          //     }
+          //     if (parseFloat(itemFrame.left) < parseFloat(maskFrame.left)) {
+          //       node.style.left = maskFrame.left
+          //     }
+          //     node.style["z-index"] = 2
+          //     style = ""
+          //     for (const key in node.style) {
+          //       style += `${key}:${node.style[key]};`
+          //     }
+          //   }
+          // }
+          wxss += `.image-${classIndex} { \n ${style} \n }\n\n`
+          break;
+        case "basic-layer-text":
+          wxContent += `<text class="text-${classIndex}">${node.value}</text>`
+          wxss += `.text-${classIndex} { \n ${style} \n }\n\n`
+          break;
+        default:
+          wxContent += `<view class="page">\n`
+          wxss += `.page { \n ${style} \n }\n\n`
+          break;
+      }
+
+      const children = node.components
+      if (children.length) {
+        maskFrame = null
+        // if (node.hasMaskChild) {
+        //   delete node.hasMaskChild
+        //   //如果当前节点的字元素中有蒙版
+        //   let child = children.find(i => i.isMask)
+        //   if (child) {
+        //     maskFrame = { top: child.style.top, left: child.style.left, width: child.style.width, height: child.style.height }
+        //     child.isMask && delete child.isMask
+        //   }
+        // }
+        children.forEach(element => {
+          json2wx(element, maskFrame)
+        })
+      }
+
+      switch (node.type) {
+        case "basic-container-div":
+          wxContent += `</view>\n`
+          break;
+        case "basic-layer-image":
+          wxContent += ``
+          break;
+        case "basic-layer-text":
+          wxContent += `\n`
+          break;
+        default:
+          wxContent += `</view>\n`
+          break;
+      }
+
+    }
+  }
 
 
+
+  /*  
+    本地读取文件能力
+  */
   // onMounted( () => {
   //   const fileInput = document.getElementById('fileInput');
   //   fileInput.addEventListener('change', (event) => {
@@ -33,8 +175,6 @@
   //       reader.readAsText(file)
   //   })
   // })
-
-
 </script>
 
 <style lang="less">
@@ -44,6 +184,14 @@
   background-color: #FFFFFF;
   border-right: 1px solid #CCC;
   position: relative;
+
+  &-exportbtn {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    background-color: #aabdec;
+  } 
 
   &-logo {
     height: 50px;

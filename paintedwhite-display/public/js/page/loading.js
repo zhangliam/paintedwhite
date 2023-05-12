@@ -14,11 +14,11 @@ var Loading = {
     ready_Loading() { 
 
       // 页面已渲染完成
-      logger.log(logger.APP, 'ready_Loading')
+      // logger.log(logger.APP, 'ready_Loading')
       // 隐藏元素
-      this.$worker().dom('loading').hide()
+      // this.$worker().dom('loading').hide()
 
-      this.$router.push('/home')
+      // this.$router.push('/home')
 
       // this.$worker().wx().config()
       // this.$worker().dialog().confirm({
