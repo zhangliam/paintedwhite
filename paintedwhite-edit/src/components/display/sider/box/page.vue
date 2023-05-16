@@ -21,36 +21,51 @@ import { changePage } from "@/utils/crud"
 const beautify = require('js-beautify').js
 const { path, ipcRenderer } = window
 
+
+
+
 const props = defineProps({
   item: Object,
   red: Number,
   green: Number
 })
 
-const page = inject('page')
+// const page = inject('page')
 const config = inject('config')
 const filePath = inject('filePath')
 const isActive = computed(() => {
-  return props.item == page.value ? 'box-active' : ''
+  return props.item == defaultSelectedPage.value ? 'box-active' : ''
 })
 const editName = ref(false)
 const editable = ref(false)
+
+const pages = inject('pages')
+const defaultSelectedPage = inject('page')
+/* 同步渲染 */ 
+defaultSelectedPage.value = pages.value[0]
+changePage(defaultSelectedPage)
+// watch(pages, () => {
+//   const { length } = pages.value
+//   // 默认选中首个渲染数据
+//   length && (defaultSelectedPage.value = pages.value[0])
+// })
+
 
 mitt.on(props.item.__id, (status) => {
   editable.value = status
 })
 
 const doClick = () => {
-  page.value = props.item
-  changePage(props.item.__id)
+  // page.value = props.item
+  // changePage(props.item.__id)
 }
 const onDBClick = () => {
   // editName.value = true
 }
 const onBlur = (e) => {
-  props.item.name = e.target.value
-  editName.value = false
-  editable.value = true
+  // props.item.name = e.target.value
+  // editName.value = false
+  // editable.value = true
 }
 const doSave = () => {
   let files = [{

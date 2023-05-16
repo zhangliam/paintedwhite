@@ -17,36 +17,75 @@
   import SiderPage from './sider/page.vue'
   import SiderLayer from './sider/layer.vue'
   import htmlformat from 'html-format'
+  import { saveAs } from 'file-saver';
+  import torem from '@/utils/torem'
 
   let wxContent = ""
   let wxss = ""
   let classIndex = 0
   // wxJson = getWxJson()
   // wxJs = this.getWxJS()
-  
 
   const exportOriginPageInfo = inject('page')
 
-  const exportCodeMoudle = () => {
-    const temp_stringify = JSON.stringify(exportOriginPageInfo.value)
-    console.log()
-    const toObjectNode = Object.assign({}, JSON.parse(temp_stringify))
-    json2wx(toObjectNode)
-    console.log(htmlformat(wxContent), wxss, classIndex)
-    // downloadDoc('hello word', JSON.stringify(exportOriginPageInfo.value))
+  const buildHTML = () => {
+    return `
+      <!DOCTYPE html>
+      <html lang="">
+        <head>
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta id="viewport" name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0,viewport-fit=cover">
+          <title>${ exportOriginPageInfo.value.name }</title>
+          <script type="text/javascript">
+            let docEl = document.documentElement;
+            let resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+            let recalc = () => {
+              var clientWidth = docEl.clientWidth
+              var scale = clientWidth / 375
+              if (!clientWidth) return
+              if (clientWidth >= 750) {
+                docEl.style.fontSize = '100px'
+              } else {
+                docEl.style.fontSize = 100 * (clientWidth / 750) + 'px'
+              }
+            };
+            if (!document.addEventListener) {
+              ruturn;
+            }
+            window.addEventListener(resizeEvt, recalc, false);
+            document.addEventListener('DOMContentLoaded', recalc, false);
+            recalc();
+          ${ "<" + "/script>" }
+          <style>
+            * {
+              box-sizing: border-box;
+              outline: 0;
+            }
+            ${ wxss }
+          </style>
+        </head>
+        <body>
+          ${ wxContent }
+        </body>
+      </html> 
+    `
   }
 
-  const downloadDoc = (filename, text) => {
-    let element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent('\n\n\n' + text));
-    element.setAttribute('download', filename);
+  const exportCodeMoudle = () => {
 
-    element.style.display = 'none';
-    document.body.appendChild(element);
+    console.log(torem.px2rem({"width": "100px"}))
+    const temp_stringify = JSON.stringify(exportOriginPageInfo.value)
+    const toObjectNode = Object.assign({}, JSON.parse(temp_stringify))
 
-    element.click();
+    json2wx(toObjectNode)
+    const exportMoudle = htmlformat(buildHTML())
+    downloadDoc(`${ exportOriginPageInfo.value.name }`, exportMoudle)
+  }
 
-    document.body.removeChild(element);
+  const downloadDoc = (filename, content) => {
+    const exportBlob = new Blob([content], { type: "text/html;charset=utf-8" });
+    saveAs(exportBlob, filename);
   }
 
    // 判断元素是否在蒙版中
@@ -63,6 +102,7 @@
     if (!node) return;
     if (node.__id) {
       let style = ""
+      node.style = torem.px2rem(node.style)
       for (const key in node.style) {
         style += `  ${key}:${node.style[key]};\n`
       }
@@ -74,6 +114,7 @@
             node.style["z-index"] = 1 
             style += "  z-index:1;"
           }
+        
           wxss += `.view-${classIndex} { \n ${style} \n }\n\n`
           break;
         case "basic-layer-image":
@@ -154,8 +195,6 @@
     }
   }
 
-
-
   /*  
     本地读取文件能力
   */
@@ -175,6 +214,7 @@
   //       reader.readAsText(file)
   //   })
   // })
+
 </script>
 
 <style lang="less">
