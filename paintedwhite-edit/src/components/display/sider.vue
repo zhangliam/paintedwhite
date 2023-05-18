@@ -1,8 +1,12 @@
 <template>
   <div class="sider">
     <div class="sider-logo">
+      <div class="sider-title">导出</div>
       <!-- <div class="sider-logo-title"><input type="file" id="fileInput"></div> -->
-      <a @click="exportCodeMoudle" class="sider-exportbtn">导出</a>
+      <div class="sider-exportarea">
+        <a @click="exportCodeMoudle" class="sider-exportbtn">H5模版</a>
+        <a @click="saveEditRequest" class="sider-exportbtn">保存</a>
+      </div>
     </div>
     <div class="sider-content">
       <SiderPage></SiderPage>
@@ -13,6 +17,7 @@
 
 <script setup>
 
+  import axios from 'axios';
   import { nextTick, onMounted, provide, inject, ref} from 'vue';
   import SiderPage from './sider/page.vue'
   import SiderLayer from './sider/layer.vue'
@@ -25,6 +30,10 @@
   let classIndex = 0
   // wxJson = getWxJson()
   // wxJs = this.getWxJS()
+
+  axios.defaults.baseURL = 'http://192.168.60.237:9999';
+  axios.defaults.headers.common['TENANT-ID'] = 4
+  axios.defaults.headers.common['Authorization'] = 'Bearer 2901455d-7f82-4d81-813e-77223c9af051';
 
   const exportOriginPageInfo = inject('page')
 
@@ -41,14 +50,9 @@
             let docEl = document.documentElement;
             let resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
             let recalc = () => {
-              var clientWidth = docEl.clientWidth
-              var scale = clientWidth / 375
-              if (!clientWidth) return
-              if (clientWidth >= 750) {
-                docEl.style.fontSize = '100px'
-              } else {
-                docEl.style.fontSize = 100 * (clientWidth / 750) + 'px'
-              }
+              var clientWidth = docEl.clientWidth;
+              var scale = clientWidth / 375;
+              docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
             };
             if (!document.addEventListener) {
               ruturn;
@@ -72,33 +76,7 @@
     `
   }
 
-  const exportCodeMoudle = () => {
-
-    console.log(torem.px2rem({"width": "100px"}))
-    const temp_stringify = JSON.stringify(exportOriginPageInfo.value)
-    const toObjectNode = Object.assign({}, JSON.parse(temp_stringify))
-
-    json2wx(toObjectNode)
-    const exportMoudle = htmlformat(buildHTML())
-    downloadDoc(`${ exportOriginPageInfo.value.name }`, exportMoudle)
-  }
-
-  const downloadDoc = (filename, content) => {
-    const exportBlob = new Blob([content], { type: "text/html;charset=utf-8" });
-    saveAs(exportBlob, filename);
-  }
-
-   // 判断元素是否在蒙版中
-  const isInMask = (maskFrame, itemFrame) => {
-    if ((parseFloat(itemFrame.top) + parseFloat(itemFrame.height) < parseFloat(maskFrame.top)) || (parseFloat(itemFrame.top) > parseFloat(maskFrame.top) + parseFloat(maskFrame.height)) || (parseFloat(itemFrame.left) + parseFloat(itemFrame.width) < parseFloat(maskFrame.left)) || (parseFloat(itemFrame.left) > parseFloat(maskFrame.left) + parseFloat(maskFrame.width))) {
-      return false
-    }
-    else {
-      return true
-    }
-  }
-
-  const json2wx = (node, maskFrame = null) => {
+  const json2wx = (node) => {
     if (!node) return;
     if (node.__id) {
       let style = ""
@@ -119,35 +97,6 @@
           break;
         case "basic-layer-image":
           wxContent += `<image class="image-${classIndex}" src="${node.value}" />\n`
-          // if (maskFrame) {
-          //   let itemFrame = {
-          //     width: node.style.width,
-          //     height: node.style.height,
-          //     top: node.style.top,
-          //     left: node.style.left,
-          //   }
-          //   // console.log('%c [ maskFrame ]-445', maskFrame)
-          //   // console.log('%c [ itemFrame ]-446', itemFrame)
-          //   if (isInMask(maskFrame, itemFrame)) {
-          //     if (parseFloat(itemFrame.width) > parseFloat(maskFrame.width)) {
-          //       node.style.width = maskFrame.width
-          //     }
-          //     if (parseFloat(itemFrame.height) > parseFloat(maskFrame.height)) {
-          //       node.style.height = maskFrame.height
-          //     }
-          //     if (parseFloat(itemFrame.top) < parseFloat(maskFrame.top)) {
-          //       node.style.top = maskFrame.top
-          //     }
-          //     if (parseFloat(itemFrame.left) < parseFloat(maskFrame.left)) {
-          //       node.style.left = maskFrame.left
-          //     }
-          //     node.style["z-index"] = 2
-          //     style = ""
-          //     for (const key in node.style) {
-          //       style += `${key}:${node.style[key]};`
-          //     }
-          //   }
-          // }
           wxss += `.image-${classIndex} { \n ${style} \n }\n\n`
           break;
         case "basic-layer-text":
@@ -162,18 +111,8 @@
 
       const children = node.components
       if (children.length) {
-        maskFrame = null
-        // if (node.hasMaskChild) {
-        //   delete node.hasMaskChild
-        //   //如果当前节点的字元素中有蒙版
-        //   let child = children.find(i => i.isMask)
-        //   if (child) {
-        //     maskFrame = { top: child.style.top, left: child.style.left, width: child.style.width, height: child.style.height }
-        //     child.isMask && delete child.isMask
-        //   }
-        // }
         children.forEach(element => {
-          json2wx(element, maskFrame)
+          json2wx(element)
         })
       }
 
@@ -192,6 +131,32 @@
           break;
       }
 
+    }
+  }
+
+  const exportCodeMoudle = () => {
+    const temp_stringify = JSON.stringify(exportOriginPageInfo.value)
+    const toObjectNode = Object.assign({}, JSON.parse(temp_stringify))
+
+    json2wx(toObjectNode)
+    downloadDoc(`${ exportOriginPageInfo.value.name }`, htmlformat(buildHTML()))
+  }
+
+  const downloadDoc = (filename, content) => {
+    const exportBlob = new Blob([content], { type: "text/html;charset=utf-8" })
+    saveAs(exportBlob, filename)
+  }
+
+  const saveEditRequest = async () => {
+    try {
+      const { status, data } = await axios.post(`/blank/paperjson`, {
+        pageJson: JSON.stringify(exportOriginPageInfo.value),
+        paperId: 18
+      })
+      // console.log(status, data)
+      alert(data.msg)
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -225,24 +190,32 @@
   border-right: 1px solid #CCC;
   position: relative;
 
+  &-title {
+    padding-left: 10px;
+    height: 36px;
+    line-height: 36px;
+  }
+
+  &-exportarea {
+    display: flex;
+    align-items: center;
+  }
+
   &-exportbtn {
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 8px 10px;
     border-radius: 10px;
+    margin-left: 10px;
     color: white;
     background-color: #aabdec;
   } 
 
   &-logo {
-    height: 50px;
-    /* display: flex; */
+    height: 80px;
+   
     box-shadow: 0 2px 1px 0px rgba(0, 0, 0, 0.2);
     position: relative;
     z-index: 999;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     &-title {
       color: #494CA2;
@@ -258,7 +231,7 @@
     width: 100%;
     position: absolute;
     left: 0px;
-    top: 50px;
+    top: 82px;
     bottom: 0px;
     overflow: hidden;
   }

@@ -38,173 +38,173 @@
 
   const isFullScreen = ref(false)
   const PAGEINFO = ref(null)
-   // provide('pages', PAGEINFO)
+  provide('pages', PAGEINFO)
 
   /* 同步渲染 */ 
-  const localPageInfo = {
-      "class": "",
-      "style": {},
-      "components": [{
-        "__id": "580E4210-BAAF-4D2D-94E4-3EA36B2F8597",
-        "name": "580E4210-BAAF-4D2D-94E4-3EA36B2F8597",
-        "style": {
-          "width": "100%",
-          "position": "absolute",
-          "top": "0px",
-          "left": "0px"
-        },
-        "value": "",
-        "components": [{
-          "__id": "E21017C7-351E-498D-A766-822306B91CBF",
-          "name": "E21017C7-351E-498D-A766-822306B91CBF",
-          "style": {
-            "width": "456px",
-            "height": "244px",
-            "position": "absolute",
-            "top": "1040px",
-            "left": "156px"
-          },
-          "value": "",
-          "components": [{
-            "__id": "A9DD1240-4F54-40D3-898B-8DED379EC6F3",
-            "name": "A9DD1240-4F54-40D3-898B-8DED379EC6F3",
-            "style": {
-              "width": "128px",
-              "height": "128px",
-              "position": "absolute",
-              "top": "0px",
-              "left": "156px"
-            },
-            "value": "images/编组 6.png",
-            "components": [{
-              "__id": "BAE9E8F3-A8F8-4ECD-A088-535C5FD7A788",
-              "name": "BAE9E8F3-A8F8-4ECD-A088-535C5FD7A788",
-              "style": {
-                "width": "128px",
-                "height": "128px",
-                "position": "absolute",
-                "top": "0px",
-                "left": "0px"
-              },
-              "value": "images/WechatIMG1932.png",
-              "components": [],
-              "config": {},
-              "include": ["normal"],
-              "type": "basic-layer-image"
-            }],
-            "config": {},
-            "include": ["normal"],
-            "type": "basic-layer-image"
-          }, {
-            "__id": "AE88BA63-C9E8-4248-88B1-15F4C847F0DF",
-            "name": "AE88BA63-C9E8-4248-88B1-15F4C847F0DF",
-            "style": {
-              "width": "456px",
-              "height": "84px",
-              "position": "absolute",
-              "top": "160px",
-              "left": "0px",
-              "color": "#A0A0A0",
-              "font-size": "24px",
-              "font-family": "PingFangSC-Regular",
-              "font-weight": "5",
-              "line-height": "42px",
-              "text-align": "center"
-            },
-            "value": "每位会员限领一次，数量有限，领完即止。\n兑换二维码每5分钟自动刷新。",
-            "components": [],
-            "config": {},
-            "include": ["normal"],
-            "type": "basic-layer-text"
-          }],
-          "config": {},
-          "include": ["normal"],
-          "type": "basic-container-div"
-        }, {
-          "__id": "5B1C51F9-67C8-4D15-8074-31DEB4DE9C32",
-          "name": "5B1C51F9-67C8-4D15-8074-31DEB4DE9C32",
-          "style": {
-            "width": "478px",
-            "height": "232px",
-            "position": "absolute",
-            "top": "728px",
-            "left": "145px"
-          },
-          "value": "",
-          "components": [{
-            "__id": "113A01A5-272F-49F8-9655-D7A493A8ACFA",
-            "name": "113A01A5-272F-49F8-9655-D7A493A8ACFA",
-            "style": {
-              "width": "216px",
-              "height": "56px",
-              "position": "absolute",
-              "top": "0px",
-              "left": "123px",
-              "color": "#1D1D1D",
-              "font-size": "36px",
-              "font-family": "PingFangSC-Medium",
-              "font-weight": "6",
-              "line-height": "56px",
-              "text-align": "center"
-            },
-            "value": "亲爱的吴珊迪",
-            "components": [],
-            "config": {},
-            "include": ["normal"],
-            "type": "basic-layer-text"
-          }, {
-            "__id": "76D151A9-CE85-4FA1-8071-404096ACD2F8",
-            "name": "76D151A9-CE85-4FA1-8071-404096ACD2F8",
-            "style": {
-              "width": "478px",
-              "height": "144px",
-              "position": "absolute",
-              "top": "88px",
-              "left": "0px",
-              "color": "#1D1D1D",
-              "font-size": "28px",
-              "font-family": "PingFangSC-Regular",
-              "font-weight": "5",
-              "line-height": "48px",
-              "text-align": "center"
-            },
-            "value": "感谢您来到香奈儿PREMIÈRE游乐场，\n有一份礼物等待您领取,\n请于入场当日凭此二维码兑换。",
-            "components": [],
-            "config": {},
-            "include": ["normal"],
-            "type": "basic-layer-text"
-          }],
-          "config": {},
-          "include": ["normal"],
-          "type": "basic-container-div"
-        }, {
-          "__id": "82388102-FA96-47A4-8B36-51F3F9D57066",
-          "name": "82388102-FA96-47A4-8B36-51F3F9D57066",
-          "style": {
-            "width": "100%",
-            "position": "absolute",
-            "top": "0px",
-            "left": "0px"
-          },
-          "value": "/images/ANIMzoltar.png",
-          "components": [],
-          "config": {
-            "mode": "aspectFill"
-          },
-          "include": ["normal"],
-          "type": "basic-layer-image"
-        }],
-        "config": {},
-        "include": ["normal"],
-        "type": "basic-container-div"
-      }],
-      "actions": [],
-      "animations": [],
-      "__id": "B85724D2-DE3A-452A-8539-89F08364B602",
-      "name": "Home",
-      "status": ["normal"]
-  }
-  provide('pages', ref([localPageInfo]))
+  // const localPageInfo = {
+  //     "class": "",
+  //     "style": {},
+  //     "components": [{
+  //       "__id": "580E4210-BAAF-4D2D-94E4-3EA36B2F8597",
+  //       "name": "580E4210-BAAF-4D2D-94E4-3EA36B2F8597",
+  //       "style": {
+  //         "width": "100%",
+  //         "position": "absolute",
+  //         "top": "0px",
+  //         "left": "0px"
+  //       },
+  //       "value": "",
+  //       "components": [{
+  //         "__id": "E21017C7-351E-498D-A766-822306B91CBF",
+  //         "name": "E21017C7-351E-498D-A766-822306B91CBF",
+  //         "style": {
+  //           "width": "456px",
+  //           "height": "244px",
+  //           "position": "absolute",
+  //           "top": "1040px",
+  //           "left": "156px"
+  //         },
+  //         "value": "",
+  //         "components": [{
+  //           "__id": "A9DD1240-4F54-40D3-898B-8DED379EC6F3",
+  //           "name": "A9DD1240-4F54-40D3-898B-8DED379EC6F3",
+  //           "style": {
+  //             "width": "128px",
+  //             "height": "128px",
+  //             "position": "absolute",
+  //             "top": "0px",
+  //             "left": "156px"
+  //           },
+  //           "value": "images/编组 6.png",
+  //           "components": [{
+  //             "__id": "BAE9E8F3-A8F8-4ECD-A088-535C5FD7A788",
+  //             "name": "BAE9E8F3-A8F8-4ECD-A088-535C5FD7A788",
+  //             "style": {
+  //               "width": "128px",
+  //               "height": "128px",
+  //               "position": "absolute",
+  //               "top": "0px",
+  //               "left": "0px"
+  //             },
+  //             "value": "images/WechatIMG1932.png",
+  //             "components": [],
+  //             "config": {},
+  //             "include": ["normal"],
+  //             "type": "basic-layer-image"
+  //           }],
+  //           "config": {},
+  //           "include": ["normal"],
+  //           "type": "basic-layer-image"
+  //         }, {
+  //           "__id": "AE88BA63-C9E8-4248-88B1-15F4C847F0DF",
+  //           "name": "AE88BA63-C9E8-4248-88B1-15F4C847F0DF",
+  //           "style": {
+  //             "width": "456px",
+  //             "height": "84px",
+  //             "position": "absolute",
+  //             "top": "160px",
+  //             "left": "0px",
+  //             "color": "#A0A0A0",
+  //             "font-size": "24px",
+  //             "font-family": "PingFangSC-Regular",
+  //             "font-weight": "5",
+  //             "line-height": "42px",
+  //             "text-align": "center"
+  //           },
+  //           "value": "每位会员限领一次，数量有限，领完即止。\n兑换二维码每5分钟自动刷新。",
+  //           "components": [],
+  //           "config": {},
+  //           "include": ["normal"],
+  //           "type": "basic-layer-text"
+  //         }],
+  //         "config": {},
+  //         "include": ["normal"],
+  //         "type": "basic-container-div"
+  //       }, {
+  //         "__id": "5B1C51F9-67C8-4D15-8074-31DEB4DE9C32",
+  //         "name": "5B1C51F9-67C8-4D15-8074-31DEB4DE9C32",
+  //         "style": {
+  //           "width": "478px",
+  //           "height": "232px",
+  //           "position": "absolute",
+  //           "top": "728px",
+  //           "left": "145px"
+  //         },
+  //         "value": "",
+  //         "components": [{
+  //           "__id": "113A01A5-272F-49F8-9655-D7A493A8ACFA",
+  //           "name": "113A01A5-272F-49F8-9655-D7A493A8ACFA",
+  //           "style": {
+  //             "width": "216px",
+  //             "height": "56px",
+  //             "position": "absolute",
+  //             "top": "0px",
+  //             "left": "123px",
+  //             "color": "#1D1D1D",
+  //             "font-size": "36px",
+  //             "font-family": "PingFangSC-Medium",
+  //             "font-weight": "6",
+  //             "line-height": "56px",
+  //             "text-align": "center"
+  //           },
+  //           "value": "亲爱的吴珊迪",
+  //           "components": [],
+  //           "config": {},
+  //           "include": ["normal"],
+  //           "type": "basic-layer-text"
+  //         }, {
+  //           "__id": "76D151A9-CE85-4FA1-8071-404096ACD2F8",
+  //           "name": "76D151A9-CE85-4FA1-8071-404096ACD2F8",
+  //           "style": {
+  //             "width": "478px",
+  //             "height": "144px",
+  //             "position": "absolute",
+  //             "top": "88px",
+  //             "left": "0px",
+  //             "color": "#1D1D1D",
+  //             "font-size": "28px",
+  //             "font-family": "PingFangSC-Regular",
+  //             "font-weight": "5",
+  //             "line-height": "48px",
+  //             "text-align": "center"
+  //           },
+  //           "value": "感谢您来到香奈儿PREMIÈRE游乐场，\n有一份礼物等待您领取,\n请于入场当日凭此二维码兑换。",
+  //           "components": [],
+  //           "config": {},
+  //           "include": ["normal"],
+  //           "type": "basic-layer-text"
+  //         }],
+  //         "config": {},
+  //         "include": ["normal"],
+  //         "type": "basic-container-div"
+  //       }, {
+  //         "__id": "82388102-FA96-47A4-8B36-51F3F9D57066",
+  //         "name": "82388102-FA96-47A4-8B36-51F3F9D57066",
+  //         "style": {
+  //           "width": "100%",
+  //           "position": "absolute",
+  //           "top": "0px",
+  //           "left": "0px"
+  //         },
+  //         "value": "/images/ANIMzoltar.png",
+  //         "components": [],
+  //         "config": {
+  //           "mode": "aspectFill"
+  //         },
+  //         "include": ["normal"],
+  //         "type": "basic-layer-image"
+  //       }],
+  //       "config": {},
+  //       "include": ["normal"],
+  //       "type": "basic-container-div"
+  //     }],
+  //     "actions": [],
+  //     "animations": [],
+  //     "__id": "B85724D2-DE3A-452A-8539-89F08364B602",
+  //     "name": "Home",
+  //     "status": ["normal"]
+  // }
+  // provide('pages', ref([localPageInfo]))
 
   provide('config', ref({version: 3.5, pages: {}, path: ''}))
   provide('filePath', ref(''))
@@ -227,7 +227,7 @@
   }
 
   onMounted( () => {
-    // getDesignMoudleInfo()
+    getDesignMoudleInfo()
   })
 
   // installIPC(ipcRenderer, getCurrentInstance().provides)

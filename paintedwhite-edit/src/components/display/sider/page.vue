@@ -24,19 +24,19 @@
   let defaultSelectedPage = inject('page')
 
   /* 同步渲染 */ 
-  defaultSelectedPage.value = pages.value[0]
+  // defaultSelectedPage.value = pages.value[0]
   
-  // watch(pages, () => {
-  //   const { length } = pages.value
-  //   // 默认选中首个渲染数据
-  //   length && (defaultSelectedPage.value = pages.value[0])
-  // })
+  watch(pages, () => {
+    const { length } = pages.value
+    // 默认选中首个渲染数据
+    length && (defaultSelectedPage.value = pages.value[0])
+  })
 
-  // const showCreate = () => {
-  //   if (filePath.value) {
-  //     ipcRenderer.send('CREATE_PAGE', filePath.value)
-  //   }
-  // }
+  const showCreate = () => {
+    if (filePath.value) {
+      ipcRenderer.send('CREATE_PAGE', filePath.value)
+    }
+  }
 
 </script>
 
