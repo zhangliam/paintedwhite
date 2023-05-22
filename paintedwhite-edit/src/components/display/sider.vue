@@ -33,7 +33,7 @@
 
   axios.defaults.baseURL = 'http://192.168.60.237:9999';
   axios.defaults.headers.common['TENANT-ID'] = 4
-  axios.defaults.headers.common['Authorization'] = 'Bearer 2901455d-7f82-4d81-813e-77223c9af051';
+  axios.defaults.headers.common['Authorization'] = 'Bearer 499dd6fc-3f82-4d3e-89f7-65026bf90c48';
 
   const exportOriginPageInfo = inject('page')
 

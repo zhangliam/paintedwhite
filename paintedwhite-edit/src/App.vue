@@ -26,7 +26,7 @@
 
   axios.defaults.baseURL = 'http://192.168.60.237:9999';
   axios.defaults.headers.common['TENANT-ID'] = 4
-  axios.defaults.headers.common['Authorization'] = 'Bearer 2901455d-7f82-4d81-813e-77223c9af051';
+  axios.defaults.headers.common['Authorization'] = 'Bearer 499dd6fc-3f82-4d3e-89f7-65026bf90c48';
 
   const doOuter = () => {}
   const triggerFullScreen = () => {
@@ -213,7 +213,7 @@
   provide('fullscreen', isFullScreen)
  
   
-  async function getDesignMoudleInfo(id=18) {
+  async function getDesignMoudleInfo(id=3) {
     try {
       const { status, data } = await axios.get(`/blank/paper/getPaperJson/${ id }`, {
         params: {
@@ -229,6 +229,7 @@
   onMounted( () => {
     getDesignMoudleInfo()
   })
+
 
   // installIPC(ipcRenderer, getCurrentInstance().provides)
   window.addEventListener('keydown', (e) => {
