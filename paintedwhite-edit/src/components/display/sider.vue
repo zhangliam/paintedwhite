@@ -4,8 +4,9 @@
       <div class="sider-title">导出</div>
       <!-- <div class="sider-logo-title"><input type="file" id="fileInput"></div> -->
       <div class="sider-exportarea">
-        <a @click="exportCodeMoudle" class="sider-exportbtn">H5模版</a>
-        <a @click="saveEditRequest" class="sider-exportbtn">保存</a>
+        <a @click="exportCodeMoudle('h5')" class="sider-exportbtn">H5模版</a>
+        <a @click="exportCodeMoudle('miniprogram')" class="sider-exportbtn">小程序模版</a>
+        <a @click="saveEditRequest" class="sider-exportbtn">保存修改</a>
       </div>
     </div>
     <div class="sider-content">
@@ -25,9 +26,11 @@
   import { saveAs } from 'file-saver';
   import torem from '@/utils/torem'
 
-  let wxContent = ""
+  
   let wxss = ""
+  let wxContent = ""
   let classIndex = 0
+  let exportType
   // wxJson = getWxJson()
   // wxJs = this.getWxJS()
 
@@ -37,7 +40,7 @@
 
   const exportOriginPageInfo = inject('page')
 
-  const buildHTML = () => {
+  const buildHTMLLayout = () => {
     return `
       <!DOCTYPE html>
       <html lang="">
@@ -80,7 +83,7 @@
     if (!node) return;
     if (node.__id) {
       let style = ""
-      node.style = torem.px2rem(node.style)
+      node.style = torem.px2rem(node.style, exportType)
       for (const key in node.style) {
         style += `  ${key}:${node.style[key]};\n`
       }
@@ -134,16 +137,44 @@
     }
   }
 
-  const exportCodeMoudle = () => {
+  const resetExportContent = () => {
+    wxss = ''
+    wxContent = ''
+    classIndex = 0
+  }
+
+  const exportCodeMoudle = (type) => {
+
     const temp_stringify = JSON.stringify(exportOriginPageInfo.value)
     const toObjectNode = Object.assign({}, JSON.parse(temp_stringify))
 
+    exportType = type
     json2wx(toObjectNode)
-    downloadDoc(`${ exportOriginPageInfo.value.name }`, htmlformat(buildHTML()))
+
+    if(type === 'h5') {
+      const resultBuildHTML = buildHTMLLayout()
+      downloadDoc(
+        `${ exportOriginPageInfo.value.name }`,
+        { suffix: 'html', content: htmlformat(resultBuildHTML) }
+      )
+      resetExportContent()
+      return
+    }
+
+    const multipleDocList = [
+      { suffix: 'plain', namesuffix: '.wxml', content: htmlformat(wxContent) },
+      { suffix: 'plain', namesuffix: '.wxss', content: htmlformat(wxss) },
+    ]
+
+    multipleDocList.map(item => {
+      downloadDoc(`${ exportOriginPageInfo.value.name + item.namesuffix }`, item)
+    })
+    resetExportContent()
+
   }
 
-  const downloadDoc = (filename, content) => {
-    const exportBlob = new Blob([content], { type: "text/html;charset=utf-8" })
+  const downloadDoc = (filename, source) => {
+    const exportBlob = new Blob([source.content], { type: `text/${ source.suffix };charset=utf-8` })
     saveAs(exportBlob, filename)
   }
 
