@@ -8,6 +8,13 @@ export const changePage = (value) => {
   page = value
 }
 
+export const getExcuteList = () => {
+  return {
+    undoList: undo,
+    redoList: redo
+  }
+}
+
 Array.prototype.pull = function(b) {
   var a = this.indexOf(b)
   if (a >= 0) {

@@ -6,6 +6,9 @@
       <img v-else src="@/assets/images/vertical.svg" class="preview-mode"
         type="image/svg+xml" />
     </div>
+    <a @click="saveEditRequest" class="preview-exportbtn">保存修改</a>
+    <a @click="executeRedoAction" class="preview-excutebtn preview-excutebtn-undo">恢复</a>
+    <a @click="executeUndoAction" class="preview-excutebtn preview-excutebtn-do">撤销</a>
     <div class="preview-mock" ref="preview" @click="doClick">
       <Mock></Mock>
     </div>
@@ -20,16 +23,35 @@
 </template>
 
 <script setup>
-import { inject, ref, watch } from '@vue/runtime-core'
+
+import axios from 'axios';
+import { inject, ref, watch, onMounted } from '@vue/runtime-core'
 import Affix from './preview/affix.vue'
 import Mock from './preview/mock.vue'
 import mitt from '@/utils/mitt'
+import { executeRedoAction, executeUndoAction, getExcuteList } from "@/utils/crud"
+
+
+axios.defaults.baseURL = 'http://192.168.60.237:9999';
+axios.defaults.headers.common['TENANT-ID'] = 4
+axios.defaults.headers.common['Authorization'] = 'Bearer 499dd6fc-3f82-4d3e-89f7-65026bf90c48';
 
 let orientation = inject('orientation')
+const exportOriginPageInfo = inject('page')
+
 
 const triggerOrientation = () => {
   orientation.value = !orientation.value
 }
+
+let excuteStepInfo
+
+onMounted( () => {
+  const { redoList, undoList } = getExcuteList()
+  excuteStepInfo = getExcuteList()
+  console.log(excuteStepInfo)
+})
+
 
 const layer = inject('layer')
 const layerID = inject('layerID')
@@ -46,6 +68,20 @@ const triggerVisible = () => {
   visible.value = !visible.value
   mitt.emit('update_visible', visible.value)
 }
+
+const saveEditRequest = async () => {
+  try {
+    const { status, data } = await axios.post(`/blank/paperjson`, {
+      pageJson: JSON.stringify(exportOriginPageInfo.value),
+      paperId: 18
+    })
+    // console.log(status, data)
+    alert(data.msg)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 </script>
 
 <style lang="less">
@@ -55,6 +91,36 @@ const triggerVisible = () => {
   overflow: hidden;
   position: relative;
   background-color: #E3E7F1;
+
+  &-exportbtn {
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 10px;
+    margin: 20px 30px 0 0;
+    color: white;
+    background-color: #aabdec;
+    position: absolute;
+    z-index: 999999;
+    right: 0;
+  } 
+
+  &-excutebtn {
+    cursor: pointer;
+    padding: 8px 10px;
+    border: 1px #aabdec solid; 
+    border-radius: 10px;
+    color: #aabdec;
+    position: absolute;
+    z-index: 999999;
+    right: 0;
+    &-do {
+      margin: 20px 120px 0 0;
+    }
+    &-undo {
+      margin: 20px 170px 0 0;
+    }
+  }
+
 
   &-controller {
     position: absolute;

@@ -10,6 +10,7 @@
 import { computed, inject, ref, watch, nextTick } from 'vue'
 import mitt from '@/utils/mitt'
 import { findOneById } from '../../../utils/lowdb'
+import { getExcuteList } from "@/utils/crud"
 
 const orientation = inject('orientation')
 
@@ -71,7 +72,6 @@ function frameLoadCallback() {
 //     }, '*')
 //   }
 // })
-
 
 const initData = (layer) => {
   
@@ -142,6 +142,7 @@ window.addEventListener('message', (e) => {
 
 const status = ref('normal')
 watch(layerID, () => {
+  // console.log('fuck', layerID.value, getExcuteList())
   mock.value.contentWindow.postMessage({
     command: 'SELECT_LAYER',
     layer: layerID.value

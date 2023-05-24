@@ -6,7 +6,6 @@
       <div class="sider-exportarea">
         <a @click="exportCodeMoudle('h5')" class="sider-exportbtn">H5模版</a>
         <a @click="exportCodeMoudle('miniprogram')" class="sider-exportbtn">小程序模版</a>
-        <a @click="saveEditRequest" class="sider-exportbtn">保存修改</a>
       </div>
     </div>
     <div class="sider-content">
@@ -18,7 +17,6 @@
 
 <script setup>
 
-  import axios from 'axios';
   import { nextTick, onMounted, provide, inject, ref} from 'vue';
   import SiderPage from './sider/page.vue'
   import SiderLayer from './sider/layer.vue'
@@ -34,9 +32,7 @@
   // wxJson = getWxJson()
   // wxJs = this.getWxJS()
 
-  axios.defaults.baseURL = 'http://192.168.60.237:9999';
-  axios.defaults.headers.common['TENANT-ID'] = 4
-  axios.defaults.headers.common['Authorization'] = 'Bearer 499dd6fc-3f82-4d3e-89f7-65026bf90c48';
+ 
 
   const exportOriginPageInfo = inject('page')
 
@@ -161,12 +157,12 @@
       return
     }
 
-    const multipleDocList = [
+    const wxMultipleDocList = [
       { suffix: 'plain', namesuffix: '.wxml', content: htmlformat(wxContent) },
       { suffix: 'plain', namesuffix: '.wxss', content: htmlformat(wxss) },
     ]
 
-    multipleDocList.map(item => {
+    wxMultipleDocList.map(item => {
       downloadDoc(`${ exportOriginPageInfo.value.name + item.namesuffix }`, item)
     })
     resetExportContent()
@@ -178,18 +174,7 @@
     saveAs(exportBlob, filename)
   }
 
-  const saveEditRequest = async () => {
-    try {
-      const { status, data } = await axios.post(`/blank/paperjson`, {
-        pageJson: JSON.stringify(exportOriginPageInfo.value),
-        paperId: 18
-      })
-      // console.log(status, data)
-      alert(data.msg)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  
 
   /*  
     本地读取文件能力
@@ -227,11 +212,6 @@
     line-height: 36px;
   }
 
-  &-exportarea {
-    display: flex;
-    align-items: center;
-  }
-
   &-exportbtn {
     cursor: pointer;
     padding: 8px 10px;
@@ -240,6 +220,11 @@
     color: white;
     background-color: #aabdec;
   } 
+
+  &-exportarea {
+    display: flex;
+    align-items: center;
+  }
 
   &-logo {
     height: 80px;
