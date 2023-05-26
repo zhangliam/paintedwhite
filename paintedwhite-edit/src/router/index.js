@@ -1,9 +1,9 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import Display from '../pages/display.vue'
 import Process from '../pages/process.vue'
 
 export const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: [{
     path: '/',
     name: 'display',
@@ -14,3 +14,15 @@ export const router = createRouter({
     component: Process
   }]
 })
+
+export const routes = [
+  {
+    path: '/',
+    name: 'display',
+    component: Display
+  }, {
+    path: '/process',
+    name: 'process',
+    component: Process
+  }
+]

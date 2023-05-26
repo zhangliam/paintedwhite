@@ -1,7 +1,7 @@
 <template>
   <div class="mock" :style="mockStyle">
     <div class="mock-bridge" ref="bridge" :style="bridgeStyle">
-      <iframe v-show="!loading" ref="mock" @load="frameLoadCallback" src="http://localhost:8080/#/"></iframe>
+      <iframe v-show="!loading" ref="mock" @load="frameLoadCallback" src="http://192.168.61.126:8080/"></iframe>
     </div>
   </div>
 </template>

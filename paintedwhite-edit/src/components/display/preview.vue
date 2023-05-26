@@ -32,13 +32,18 @@ import mitt from '@/utils/mitt'
 import { executeRedoAction, executeUndoAction, getExcuteList } from "@/utils/crud"
 
 
-axios.defaults.baseURL = 'http://192.168.60.237:9999';
-axios.defaults.headers.common['TENANT-ID'] = 4
-axios.defaults.headers.common['Authorization'] = 'Bearer 499dd6fc-3f82-4d3e-89f7-65026bf90c48';
+let $SUPER_PRO_INFO
+const $SUPER = inject('$super')
+
+if($SUPER && $SUPER['TENANT-ID']) {
+  $SUPER_PRO_INFO = $SUPER.getProInfo()
+  axios.defaults.baseURL = process.env.VUE_APP_BASE_API
+  axios.defaults.headers.common['TENANT-ID'] = $SUPER_PRO_INFO['tenantId']
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + $SUPER.accessToken()
+}
 
 let orientation = inject('orientation')
 const exportOriginPageInfo = inject('page')
-
 
 const triggerOrientation = () => {
   orientation.value = !orientation.value
@@ -73,7 +78,7 @@ const saveEditRequest = async () => {
   try {
     const { status, data } = await axios.post(`/blank/paperjson`, {
       pageJson: JSON.stringify(exportOriginPageInfo.value),
-      paperId: 18
+      paperId: `${ $SUPER_PRO_INFO['paperId'] }`
     })
     // console.log(status, data)
     alert(data.msg)

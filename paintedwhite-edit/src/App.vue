@@ -24,9 +24,15 @@
   // http://192.168.60.237:9999/blank/paper/getPaperJson/18?TERMINAL-TYPE=to_c
   // qs && JSON.stringify
 
-  axios.defaults.baseURL = 'http://192.168.60.237:9999';
-  axios.defaults.headers.common['TENANT-ID'] = 4
-  axios.defaults.headers.common['Authorization'] = 'Bearer 499dd6fc-3f82-4d3e-89f7-65026bf90c48';
+  let $SUPER_PRO_INFO
+  const $SUPER = inject('$super')
+  
+  if($SUPER && $SUPER['TENANT-ID']) {
+    $SUPER_PRO_INFO = $SUPER.getProInfo()
+    axios.defaults.baseURL = process.env.VUE_APP_BASE_API
+    axios.defaults.headers.common['TENANT-ID'] = $SUPER_PRO_INFO['tenantId']
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + $SUPER.accessToken()
+  }
 
   const doOuter = () => {}
   const triggerFullScreen = () => {
@@ -213,11 +219,11 @@
   provide('fullscreen', isFullScreen)
  
   
-  async function getDesignMoudleInfo(id=3) {
+  async function getDesignMoudleInfo() {
     try {
-      const { status, data } = await axios.get(`/blank/paper/getPaperJson/${ id }`, {
+      const { status, data } = await axios.get(`/blank/paper/getPaperJson/${ $SUPER_PRO_INFO['paperId'] }`, {
         params: {
-          'TERMINAL-TYPE': 'to_c'
+          'TERMINAL-TYPE': $SUPER_PRO_INFO['terminalType'] || ''
         }
       })
       status === 200 && (PAGEINFO.value = [].concat(data.data))
