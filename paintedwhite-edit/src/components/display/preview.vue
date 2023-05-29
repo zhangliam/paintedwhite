@@ -35,7 +35,7 @@ import { executeRedoAction, executeUndoAction, getExcuteList } from "@/utils/cru
 let $SUPER_PRO_INFO
 const $SUPER = inject('$super')
 
-if($SUPER && $SUPER['TENANT-ID']) {
+if($SUPER) {
   $SUPER_PRO_INFO = $SUPER.getProInfo()
   axios.defaults.baseURL = process.env.VUE_APP_BASE_API
   axios.defaults.headers.common['TENANT-ID'] = $SUPER_PRO_INFO['tenantId']

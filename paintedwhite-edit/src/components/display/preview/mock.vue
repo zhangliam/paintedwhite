@@ -49,7 +49,8 @@ const actions = inject('actions')
 
 let $SUPER_PRO_INFO
 const $SUPER = inject('$super')
-if($SUPER && $SUPER['TENANT-ID']) {
+console.log('mockIframe Data ======>', $SUPER, $SUPER.getProInfo())
+if($SUPER) {
   $SUPER_PRO_INFO = $SUPER.getProInfo()
   axios.defaults.baseURL = process.env.VUE_APP_BASE_API
   axios.defaults.headers.common['TENANT-ID'] = $SUPER_PRO_INFO['tenantId']

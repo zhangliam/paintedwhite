@@ -1,9 +1,11 @@
 const CompressPlugin = require('compression-webpack-plugin')
 
+
+// publicPath: process.env.NODE_ENV === 'production' ? 'public/' : '/',
 module.exports = {
   //Solution For Issue:You are using the runtime-only build of Vue where the template compiler is not available. Either pre-compile the templates into render functions, or use the compiler-included build.
   runtimeCompiler: true,
-	publicPath: process.env.NODE_ENV === 'production' ? 'public/' : '/',
+	publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
 	configureWebpack: config => {
 		if (process.env.NODE_ENV === 'production') {
 			return {
