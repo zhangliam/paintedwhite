@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     
     <transition name="header">
       <div class="header" v-if="$route.meta.navigator">
@@ -19,7 +18,6 @@
         <router-view></router-view>
       </transition>
     </div>
-
 
    <!--  <transition name="navi">
       <div class="navi" :style="safeArea" v-if="$route.meta.tabbar">

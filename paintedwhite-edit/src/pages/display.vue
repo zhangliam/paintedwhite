@@ -15,7 +15,6 @@ import StyleBuilder from '../components/display/style-builder.vue'
 import { ref } from '@vue/reactivity'
 import { provide } from '@vue/runtime-core'
 
-provide('page', ref(null))
 provide('layer', ref(null))
 provide('layerID', ref(null))
 provide('clip_include', ref(null))
@@ -30,6 +29,7 @@ provide('clip_action_list', ref(null))
 provide('clip_animation', ref(null))
 provide('clip_animation_prop', ref(null))
 provide('actions', ref({}))
+
 </script>
 
 <style>

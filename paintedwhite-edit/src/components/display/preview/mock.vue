@@ -1,12 +1,13 @@
 <template>
   <div class="mock" :style="mockStyle">
     <div class="mock-bridge" ref="bridge" :style="bridgeStyle">
-      <iframe v-show="!loading" ref="mock" @load="frameLoadCallback" src="http://192.168.61.126:8080/"></iframe>
+      <iframe v-show="!loading" ref="mock" @load="frameLoadCallback" src="https://model.jinznet.com/sres/index.html"></iframe>
     </div>
   </div>
 </template>
 
 <script setup>
+import axios from 'axios';
 import { computed, inject, ref, watch, nextTick } from 'vue'
 import mitt from '@/utils/mitt'
 import { findOneById } from '../../../utils/lowdb'
@@ -38,20 +39,57 @@ const bridgeStyle = computed(() => {
 
 const mock = ref(null)
 const page = inject('page')
+const pages = inject('pages')
+
 const loading = ref(false)
 const layerID = inject('layerID')
 const config = inject('config')
 const actions = inject('actions')
 
 
+let $SUPER_PRO_INFO
+const $SUPER = inject('$super')
+if($SUPER && $SUPER['TENANT-ID']) {
+  $SUPER_PRO_INFO = $SUPER.getProInfo()
+  axios.defaults.baseURL = process.env.VUE_APP_BASE_API
+  axios.defaults.headers.common['TENANT-ID'] = $SUPER_PRO_INFO['tenantId']
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + $SUPER.accessToken()
+}
+
+// axios.defaults.baseURL = process.env.VUE_APP_BASE_API
+// axios.defaults.headers.common['TENANT-ID'] = 4
+// axios.defaults.headers.common['Authorization'] = 'Bearer e9a418a2-9ce0-42cb-b707-50ded3193b62'
+// /blank/paper/getPaperJson/${ 3 }
+// 'TERMINAL-TYPE': 'to_c'
+
+async function getDesignMoudleInfo(callback) {
+  try {
+    const { status, data } = await axios.get(`/blank/paper/getPaperJson/${ $SUPER_PRO_INFO['paperId'] }`, {
+      params: {
+        'TERMINAL-TYPE': $SUPER_PRO_INFO['terminalType']
+      }
+    })
+    if(status === 200) {
+      pages.value = [].concat(data.data)
+      page.value = data.data
+      callback && callback()
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 function frameLoadCallback() {
-  /* 同步渲染 */ 
-  setTimeout(() => {
-    mock.value.contentWindow.postMessage({
-      command: 'POST_DESIGNDRAFT_JSON',
-      data: JSON.stringify(page.value)
-    }, '*')
-  }, 0)
+
+  getDesignMoudleInfo(() => {
+    setTimeout(() => {
+      mock.value.contentWindow.postMessage({
+        command: 'POST_DESIGNDRAFT_JSON',
+        data: JSON.stringify(page.value)
+      }, '*')
+    }, 0)
+  })
+ 
   // watch(page, () => {
   //   setTimeout(() => {
   //     mock.value.contentWindow.postMessage({
@@ -142,7 +180,6 @@ window.addEventListener('message', (e) => {
 
 const status = ref('normal')
 watch(layerID, () => {
-  // console.log('fuck', layerID.value, getExcuteList())
   mock.value.contentWindow.postMessage({
     command: 'SELECT_LAYER',
     layer: layerID.value
