@@ -24,22 +24,33 @@
 
 <script setup>
 
-import axios from 'axios';
 import { inject, ref, watch, onMounted } from '@vue/runtime-core'
 import Affix from './preview/affix.vue'
 import Mock from './preview/mock.vue'
 import mitt from '@/utils/mitt'
 import { executeRedoAction, executeUndoAction, getExcuteList } from "@/utils/crud"
+import { requestInitial, requestPost } from "@/utils/request"
 
 
 let $SUPER_PRO_INFO
 const $SUPER = inject('$super')
+// const $SUPER = {
+//   accessToken() {
+//     return 'f464d29d-4b74-4d90-92e6-66be95750754'
+//   },
+//   getProInfo() {
+//     return {
+//       tenantId: 4,
+//       terminalType: 'to_c',
+//       paperId: 3,
+//     }
+//   } 
+// }
 
+console.log('mockIframe Data ======>', $SUPER, $SUPER.getProInfo())
 if($SUPER) {
   $SUPER_PRO_INFO = $SUPER.getProInfo()
-  axios.defaults.baseURL = process.env.VUE_APP_BASE_API
-  axios.defaults.headers.common['TENANT-ID'] = $SUPER_PRO_INFO['tenantId']
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + $SUPER.accessToken()
+  requestInitial($SUPER)
 }
 
 let orientation = inject('orientation')
@@ -75,12 +86,20 @@ const triggerVisible = () => {
 }
 
 const saveEditRequest = async () => {
+
+  if(!$SUPER_PRO_INFO) {  
+    console.log('主应用信息获取失败')
+    return
+  }
+
   try {
-    const { status, data } = await axios.post(`/blank/paperjson`, {
-      pageJson: JSON.stringify(exportOriginPageInfo.value),
-      paperId: `${ $SUPER_PRO_INFO['paperId'] }`
+    const { status, data } = await requestPost.post({
+      path: '/blank/paperjson',
+      data: {
+        pageJson: JSON.stringify(exportOriginPageInfo.value),
+        paperId: `${ $SUPER_PRO_INFO['paperId'] }`
+      }
     })
-    // console.log(status, data)
     alert(data.msg)
   } catch (error) {
     console.error(error)

@@ -1,19 +1,21 @@
 <template>
   <div class="mock" :style="mockStyle">
     <div class="mock-bridge" ref="bridge" :style="bridgeStyle">
-      <iframe v-show="!loading" ref="mock" @load="frameLoadCallback" src="https://model.jinznet.com/sres/index.html"></iframe>
+      <iframe v-show="!loading" ref="mock" @load="frameLoadCallback" :src="IFRAMEURL"></iframe>
     </div>
   </div>
 </template>
 
 <script setup>
-import axios from 'axios';
 import { computed, inject, ref, watch, nextTick } from 'vue'
 import mitt from '@/utils/mitt'
 import { findOneById } from '../../../utils/lowdb'
 import { getExcuteList } from "@/utils/crud"
+import { requestInitial, requestGet } from "@/utils/request"
+
 
 const orientation = inject('orientation')
+const IFRAMEURL = process.env.VUE_APP_IFRAME_API
 
 const mockStyle = computed(() => {
   return orientation.value ? {
@@ -49,23 +51,36 @@ const actions = inject('actions')
 
 let $SUPER_PRO_INFO
 const $SUPER = inject('$super')
+
+// const $SUPER = {
+//   accessToken() {
+//     return 'f464d29d-4b74-4d90-92e6-66be95750754'
+//   },
+//   getProInfo() {
+//     return {
+//       tenantId: 4,
+//       terminalType: 'to_c',
+//       paperId: 3,
+//     }
+//   } 
+// }
+
 console.log('mockIframe Data ======>', $SUPER, $SUPER.getProInfo())
 if($SUPER) {
   $SUPER_PRO_INFO = $SUPER.getProInfo()
-  axios.defaults.baseURL = process.env.VUE_APP_BASE_API
-  axios.defaults.headers.common['TENANT-ID'] = $SUPER_PRO_INFO['tenantId']
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + $SUPER.accessToken()
+  requestInitial($SUPER)
 }
 
-// axios.defaults.baseURL = process.env.VUE_APP_BASE_API
-// axios.defaults.headers.common['TENANT-ID'] = 4
-// axios.defaults.headers.common['Authorization'] = 'Bearer e9a418a2-9ce0-42cb-b707-50ded3193b62'
-// /blank/paper/getPaperJson/${ 3 }
-// 'TERMINAL-TYPE': 'to_c'
+const getDesignMoudleInfo = async (callback) => {
 
-async function getDesignMoudleInfo(callback) {
+  if(!$SUPER_PRO_INFO) {
+    console.log('主应用信息获取失败')
+    return
+  }
+
   try {
-    const { status, data } = await axios.get(`/blank/paper/getPaperJson/${ $SUPER_PRO_INFO['paperId'] }`, {
+    const { status, data } = await requestGet({
+      path: `/blank/paper/getPaperJson/${ $SUPER_PRO_INFO['paperId'] }`,
       params: {
         'TERMINAL-TYPE': $SUPER_PRO_INFO['terminalType']
       }
@@ -80,8 +95,8 @@ async function getDesignMoudleInfo(callback) {
   }
 }
 
-function frameLoadCallback() {
 
+const frameLoadCallback = () => {
   getDesignMoudleInfo(() => {
     setTimeout(() => {
       mock.value.contentWindow.postMessage({
@@ -100,6 +115,7 @@ function frameLoadCallback() {
   //   }, 1000)
   // })
 }
+
 
 // 页面切换backup
 // watch(page, () => {
