@@ -3,7 +3,7 @@ import App from './App.vue'
 import { router, routes }  from './router'
 import Vant from 'vant';
 import ElementPlus from 'element-plus'
-
+import 'element-plus/dist/index.css'
 import './public-path'
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 // import { TroisJSVuePlugin } from '@ergat3/troisjs'
@@ -36,7 +36,7 @@ function render(props = {}) {
   console.log('当前子应用(v3)接受父应用数据：', props)
 
   routerForQk = createRouter({
-    history: (mode === 'history' ? createWebHistory : createWebHashHistory)('/indep/tenant/wxtb-model/view/'),
+    history: (mode === 'history' ? createWebHistory : createWebHashHistory)( process.env.VUE_APP_ENV === 'DEVELOP' ? '' : '/indep/tenant/wxtb-model/view/'),
     routes
   })
 

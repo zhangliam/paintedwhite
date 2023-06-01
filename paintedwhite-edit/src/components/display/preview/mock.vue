@@ -4,9 +4,20 @@
       <iframe v-show="!loading" ref="mock" @load="frameLoadCallback" :src="IFRAMEURL"></iframe>
     </div>
   </div>
+
+  <!-- <el-alert title="success alert" type="success" effect="dark" /> -->
+  
 </template>
 
 <script setup>
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from '@element-plus/icons-vue'
 import { computed, inject, ref, watch, nextTick } from 'vue'
 import mitt from '@/utils/mitt'
 import { findOneById } from '../../../utils/lowdb'
@@ -48,27 +59,33 @@ const layerID = inject('layerID')
 const config = inject('config')
 const actions = inject('actions')
 
-
+let $SUPER 
 let $SUPER_PRO_INFO
-const $SUPER = inject('$super')
+const _APPENV = process.env.VUE_APP_ENV
 
-// const $SUPER = {
-//   accessToken() {
-//     return 'f464d29d-4b74-4d90-92e6-66be95750754'
-//   },
-//   getProInfo() {
-//     return {
-//       tenantId: 4,
-//       terminalType: 'to_c',
-//       paperId: 3,
-//     }
-//   } 
-// }
+if(_APPENV === 'DEVELOP') {
+  $SUPER = {
+    accessToken() {
+      return '91ca1287-2f91-4f87-ae78-77b4e4521573'
+    },
+    getProInfo() {
+      return {
+        tenantId: 4,
+        terminalType: 'to_c',
+        paperId: 5,
+      }
+    } 
+  }
+}
 
-console.log('mockIframe Data ======>', $SUPER, $SUPER.getProInfo())
+if(_APPENV === 'RELEASE') {
+  $SUPER = inject('$super')
+}
+
 if($SUPER) {
   $SUPER_PRO_INFO = $SUPER.getProInfo()
   requestInitial($SUPER)
+  console.log('mockIframe Data ======>', $SUPER, $SUPER.getProInfo())
 }
 
 const getDesignMoudleInfo = async (callback) => {
