@@ -46,9 +46,9 @@ const doPaste = () => {
 }
 
 const eventDoUpdateProp = (value, target, attr) => {
+  doUpdateProp(value, target, attr)
   console.log('eventDoUpdateProp =>', getExcuteList())
   excuteList.value = getExcuteList()
-  doUpdateProp(value, target, attr)
 }
 
 const showCreate = () => {
