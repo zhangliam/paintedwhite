@@ -17,6 +17,7 @@ import { provide } from '@vue/runtime-core'
 
 provide('layer', ref(null))
 provide('layerID', ref(null))
+provide('excuteList', ref(null))
 provide('clip_include', ref(null))
 provide('clip_include_list', ref(null))
 provide('clip_status', ref(null))

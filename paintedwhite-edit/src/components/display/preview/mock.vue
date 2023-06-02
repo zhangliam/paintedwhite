@@ -3,10 +3,7 @@
     <div class="mock-bridge" ref="bridge" :style="bridgeStyle">
       <iframe v-show="!loading" ref="mock" @load="frameLoadCallback" :src="IFRAMEURL"></iframe>
     </div>
-  </div>
-
-  <!-- <el-alert title="success alert" type="success" effect="dark" /> -->
-  
+  </div>  
 </template>
 
 <script setup>
@@ -66,13 +63,13 @@ const _APPENV = process.env.VUE_APP_ENV
 if(_APPENV === 'DEVELOP') {
   $SUPER = {
     accessToken() {
-      return '91ca1287-2f91-4f87-ae78-77b4e4521573'
+      return 'c1ae3b8a-5db1-46c1-bb62-fd9bf2ce4cd0'
     },
     getProInfo() {
       return {
         tenantId: 4,
         terminalType: 'to_c',
-        paperId: 5,
+        paperId: 105,
       }
     } 
   }
@@ -270,13 +267,13 @@ mitt.on('update_rows', e => {
 
 <style lang="less">
 .mock {
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid #8186D5;
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid #CCCCCC;
   // overflow-x: hidden;
   // overflow-y: scroll;
   box-sizing: border-box;
   background-position: 0 0;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAh9JREFUeNrs3cFKAkEcwOFxN4MyCpE8dfTgpfd/oUAyRAotKRb6D9QLOMHQzvfB5Gl3HPjRKq7jpOu6h1TXTYxDalfV9V/kP8MwPJ17gr7vZ/FwjHOce/w8jt1XnH8Zx25bXX+XaJoABIAAEAACQAAIAAEgAASAABAAAmDEJl3XreJxU/E53MV4rTj/fYyXVtef7wc4xTgWnGNWePxl5flnLa/fJaBxv3cEnX2Cvu9TyTny8eavN7//AN4FIAAEgAAQAAJAAAgAASAABMC45fsB1vH4XHCOqxgfFddQOv8ixq7V9edPAw+F30//THW/H186/7Tl9bsEeA2AABAAAkAACAABIAAEgAAQAAJAAIzV5Of3AvYVn4P9ASrvD5DZH6DR9bsENM7+APYHwLsABIAAEAACQAAIAAEgAASAABixfD/AYyrbH+A6xnvB8bcx3irOX+pfrz9/GrgfhmF77glKf78+jv8q/H586fzLltfvEuA1AAJAAAgAASAABIAAEAACQAAIAAEwVvl+gFU8bio+B/sDVN4f4JTsD2B/ANpkfwD7A+BdAAJAAAgAASAABIAAEAACQACMWL4fYJ3K9gco+v36P1A6/yLGrtX1508DDzV/vz6On1eef9ry+l0CvAZAAAgAASAABIAAEAACQAAIAAEgAMbK/gD2B7A/QLI/AK2yP4D9AfAuAAEgAASAABAAAkAACAABIABG7FuAAQAKgDTTmTYqsQAAAABJRU5ErkJggg==);
+  //background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAh9JREFUeNrs3cFKAkEcwOFxN4MyCpE8dfTgpfd/oUAyRAotKRb6D9QLOMHQzvfB5Gl3HPjRKq7jpOu6h1TXTYxDalfV9V/kP8MwPJ17gr7vZ/FwjHOce/w8jt1XnH8Zx25bXX+XaJoABIAAEAACQAAIAAEgAASAABAAAmDEJl3XreJxU/E53MV4rTj/fYyXVtef7wc4xTgWnGNWePxl5flnLa/fJaBxv3cEnX2Cvu9TyTny8eavN7//AN4FIAAEgAAQAAJAAAgAASAABMC45fsB1vH4XHCOqxgfFddQOv8ixq7V9edPAw+F30//THW/H186/7Tl9bsEeA2AABAAAkAACAABIAAEgAAQAAJAAIzV5Of3AvYVn4P9ASrvD5DZH6DR9bsENM7+APYHwLsABIAAEAACQAAIAAEgAASAABixfD/AYyrbH+A6xnvB8bcx3irOX+pfrz9/GrgfhmF77glKf78+jv8q/H586fzLltfvEuA1AAJAAAgAASAABIAAEAACQAAIAAEwVvl+gFU8bio+B/sDVN4f4JTsD2B/ANpkfwD7A+BdAAJAAAgAASAABIAAEAACQACMWL4fYJ3K9gco+v36P1A6/yLGrtX1508DDzV/vz6On1eef9ry+l0CvAZAAAgAASAABIAAEAACQAAIAAEgAMbK/gD2B7A/QLI/AK2yP4D9AfAuAAEgAASAABAAAkAACAABIABG7FuAAQAKgDTTmTYqsQAAAABJRU5ErkJggg==);
 
   &-bridge {
     position: relatave;

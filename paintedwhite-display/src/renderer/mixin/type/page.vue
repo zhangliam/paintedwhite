@@ -183,8 +183,6 @@ export default {
 
           case 'SELECT_LAYER':
             let { layer } = e.data;
-            // console.log(_self.elements[layer].$el)
-            console.log('SELECT_LAYER', e.data, _self)
             if(_self._lastElements) {
               _self._lastElements.classList.remove('layer_selected');
               _self._lastElements = null;
@@ -314,7 +312,6 @@ export default {
         this.elements['page'] = this.elements['root'] = this 
       }
       this.item = config
-      console.log('page initDisplayObject =>', config, this.elements)
     },
     /**
      * 

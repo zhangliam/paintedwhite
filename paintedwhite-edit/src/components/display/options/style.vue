@@ -15,7 +15,7 @@
         :key="key">
         <div class="options-property-title">{{key}}:</div>
         <div class="options-property-input"><input type="text" :value="value" 
-          @input="doUpdateProp($event.target.value, target, `style.${key}`)" /></div>
+          @input="eventDoUpdateProp($event.target.value, target, `style.${key}`)" /></div>
         <img @click="doRemoveProp(target, `style.${key}`)" class="options-icon"
           src="@/assets/images/remove.svg" />
       </div>
@@ -24,14 +24,17 @@
 </template>
 
 <script setup>
+
 import { computed, inject } from "@vue/runtime-core"
-import { doCreateProp, doUpdateProp, doRemoveProp } from '@/utils/crud'
+import { getExcuteList ,doCreateProp, doUpdateProp, doRemoveProp } from '@/utils/crud'
 // import prompt from '../../prompt'
 
 const props = defineProps({
   title: String,
   target: Object
 })
+
+const excuteList = inject('excuteList')
 
 const computedStyle = computed(() => props.target.style || {})
 
@@ -41,6 +44,13 @@ const doCopy = (style) => { clipStyle.value = style }
 const doPaste = () => {
   doUpdateProp(clipStyle.value, props.target, 'style')
 }
+
+const eventDoUpdateProp = (value, target, attr) => {
+  console.log('eventDoUpdateProp =>', getExcuteList())
+  excuteList.value = getExcuteList()
+  doUpdateProp(value, target, attr)
+}
+
 const showCreate = () => {
   // prompt({
   //   title: '添加样式',

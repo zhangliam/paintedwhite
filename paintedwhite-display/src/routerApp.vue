@@ -146,6 +146,10 @@ body {
   margin: 0;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .header {
   width: 100%;
   position: fixed;
@@ -166,9 +170,10 @@ body {
 .content {
   width: 100%;
   position: fixed;
-  /*overflow-y: scroll;*/
+  overflow-y: scroll;
+  overflow-x: hidden;
   will-change: transform;
-  /* transition: all 0.1s ease-out; */
+  transition: all 0.1s ease-out;
 }
 
 .navi {

@@ -39,13 +39,13 @@ const _APPENV = process.env.VUE_APP_ENV
 if(_APPENV === 'DEVELOP') {
   $SUPER = {
     accessToken() {
-      return '91ca1287-2f91-4f87-ae78-77b4e4521573'
+      return 'c1ae3b8a-5db1-46c1-bb62-fd9bf2ce4cd0'
     },
     getProInfo() {
       return {
         tenantId: 4,
         terminalType: 'to_c',
-        paperId: 5,
+        paperId: 105,
       }
     } 
   }
@@ -80,6 +80,13 @@ onMounted( () => {
 const layer = inject('layer')
 const layerID = inject('layerID')
 const preview = ref(null)
+const excuteList = inject('excuteList')
+
+watch(excuteList, () => {
+  console.log('preview watch', excuteList.value)
+})
+  
+
 const doClick = (e) => {
   if (e.target == preview.value) {
     layer.value = null
@@ -101,7 +108,7 @@ const saveEditRequest = async () => {
   }
 
   try {
-    const { status, data } = await requestPost.post({
+    const { status, data } = await requestPost({
       path: '/blank/paperjson',
       data: {
         pageJson: JSON.stringify(exportOriginPageInfo.value),

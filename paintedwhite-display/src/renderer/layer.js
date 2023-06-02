@@ -56,11 +56,9 @@ export default {
     initDisplayObject () {
       this.logger.add(LOGGER.FRAMEWORK_FUN, 'initDisplayObject')
       if (this.item) {
-        console.log('layer created =>', this.item)
-        if (this.item.name) {
+        if (this.item.name || this.item.__id) {
           if (this.elements) {
-            this.elements[this.item.name] = this
-            // this.elements[this.item.__id] = this
+            this.elements[this.item.name || this.item.__id] = this
           }
         }
         if (this.form && this.executeCheck) {
