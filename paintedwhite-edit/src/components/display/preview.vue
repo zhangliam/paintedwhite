@@ -7,8 +7,8 @@
         type="image/svg+xml" />
     </div>
     <a @click="saveEditRequest" class="preview-exportbtn">保存修改</a>
-    <a @click="executeRedoAction" class="preview-excutebtn preview-excutebtn-undo">恢复</a>
-    <a @click="executeUndoAction" class="preview-excutebtn preview-excutebtn-do">撤销</a>
+    <a @click="EventExecuteRedoAction"  :class=" 'preview-excutebtn preview-excutebtn-undo ' + (showRedoBtn && ' preview-excutebtn-disable' ) ">恢复</a>
+    <a @click="EventExecuteUndoAction"  :class=" 'preview-excutebtn preview-excutebtn-do ' + (showUodoBtn && ' preview-excutebtn-disable') ">撤销</a>
     <div class="preview-mock" ref="preview" @click="doClick">
       <Mock></Mock>
     </div>
@@ -24,7 +24,7 @@
 
 <script setup>
 
-import { inject, ref, watch, onMounted } from '@vue/runtime-core'
+import { inject, ref, watch, onMounted, computed } from '@vue/runtime-core'
 import Affix from './preview/affix.vue'
 import Mock from './preview/mock.vue'
 import mitt from '@/utils/mitt'
@@ -39,7 +39,7 @@ const _APPENV = process.env.VUE_APP_ENV
 if(_APPENV === 'DEVELOP') {
   $SUPER = {
     accessToken() {
-      return 'c1ae3b8a-5db1-46c1-bb62-fd9bf2ce4cd0'
+      return 'd6a06531-debd-430a-9602-17f8335b8eb0'
     },
     getProInfo() {
       return {
@@ -68,23 +68,13 @@ const triggerOrientation = () => {
   orientation.value = !orientation.value
 }
 
-let excuteStepInfo
-
-onMounted( () => {
-  const { redoList, undoList } = getExcuteList()
-  excuteStepInfo = getExcuteList()
-  console.log(excuteStepInfo)
-})
-
 
 const layer = inject('layer')
 const layerID = inject('layerID')
 const preview = ref(null)
-const excuteList = inject('excuteList')
 
-watch(excuteList, () => {
-  console.log('preview watch', excuteList.value)
-})
+const undoStepList = ref([])
+const redoStepList = ref([])
   
 
 const doClick = (e) => {
@@ -120,6 +110,40 @@ const saveEditRequest = async () => {
     console.error(error)
   }
 }
+
+
+const EventExecuteRedoAction = () => {
+  if(showRedoBtn.value) return
+  executeRedoAction()
+  let action = redoStepList.value.pop()
+  undoStepList.value.push(action)
+}
+
+
+const EventExecuteUndoAction = () => {
+  if(showUodoBtn.value) return
+  executeUndoAction()
+  let action = undoStepList.value.pop()
+  redoStepList.value.push(action)
+}
+
+mitt.on('undo', (e) => {
+  undoStepList.value.push(e)
+  console.log(e, undoStepList.value)
+})
+
+mitt.on('redo', (e) => {
+  redoStepList.value.push(e)
+  console.log(e, redoStepList.value)
+})
+
+const showUodoBtn = computed(() => {
+  return Boolean(undoStepList.value.length == 0)
+})
+
+const showRedoBtn = computed(() => {
+  return Boolean(redoStepList.value.length == 0) 
+})
 
 </script>
 
@@ -157,6 +181,11 @@ const saveEditRequest = async () => {
     }
     &-undo {
       margin: 20px 170px 0 0;
+    }
+    &-disable {
+      background-color: #ccc;
+      color: white;
+      border: 1px #cccc solid; 
     }
   }
 

@@ -34,8 +34,6 @@ const props = defineProps({
   target: Object
 })
 
-const excuteList = inject('excuteList')
-
 const computedStyle = computed(() => props.target.style || {})
 
 const clipStyle = inject('clip_style')
@@ -48,7 +46,6 @@ const doPaste = () => {
 const eventDoUpdateProp = (value, target, attr) => {
   doUpdateProp(value, target, attr)
   console.log('eventDoUpdateProp =>', getExcuteList())
-  excuteList.value = getExcuteList()
 }
 
 const showCreate = () => {

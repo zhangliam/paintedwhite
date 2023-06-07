@@ -2,6 +2,9 @@ import mitt from './mitt'
 import { insertOrUpdateById } from './lowdb'
 import { jsonParse } from './json'
 
+const undo = []
+const redo = []
+
 let page
 
 export const changePage = (value) => {
@@ -23,8 +26,7 @@ Array.prototype.pull = function(b) {
   return this
 }
 
-const undo = []
-const redo = []
+
 
 mitt.on('undo', (e) => {
   undo.push(e)
